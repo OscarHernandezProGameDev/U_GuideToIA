@@ -20,9 +20,10 @@ public class Drive : MonoBehaviour
         rotation *= Time.deltaTime;
 
         // Move translation along the object's z-axis
-        transform.Translate(0, 0, translation);
+        //transform.Translate(0, 0, translation);
+        transform.Translate(0, 0, speed * Time.deltaTime);
 
         // Rotate around our y-axis
-        transform.Rotate(0, rotation, 0);
+        //transform.Rotate(0, rotation, 0);
     }
 }
