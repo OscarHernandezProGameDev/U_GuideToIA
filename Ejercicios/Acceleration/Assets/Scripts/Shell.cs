@@ -29,6 +29,8 @@ public class Shell : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
+        acceleration = force / mass;
+        speed += acceleration * Time.deltaTime;
         transform.Translate(0, 0, speed * Time.deltaTime);
     }
 }
