@@ -6,6 +6,17 @@ public class AIShell : MonoBehaviour
 {
     public GameObject explosion;
 
+    private Rigidbody rb;
+    private void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
+
+    private void Update()
+    {
+        // Para orientar la bala segun la dirección que tiene
+        transform.forward = rb.velocity;
+    }
     void OnCollisionEnter(Collision col)
     {
 

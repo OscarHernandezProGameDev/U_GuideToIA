@@ -11,31 +11,42 @@ public class FireShell : MonoBehaviour
 
     float speed = 15;
     float rotSpeed = 2f;
+    float moveSpeed = 1;
     void Update()
     {
         Vector3 direction = (enemy.transform.position - transform.position).normalized;
         Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
 
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotSpeed);
-        RotateTurret();
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        float? angle = RotateTurret();
+
+        //if (Input.GetKeyDown(KeyCode.Space))
+        if (angle.HasValue)
         {
             CreateBullet();
+        }
+        else
+        {
+            transform.Translate(0, 0, moveSpeed * Time.deltaTime);
         }
     }
     void CreateBullet()
     {
+        GameObject shell = Instantiate(bullet, turret.transform.position, turret.transform.rotation);
 
-        Instantiate(bullet, turret.transform.position, turret.transform.rotation);
+        if (shell.TryGetComponent<Rigidbody>(out Rigidbody rb))
+            rb.velocity = speed * turretBase.transform.forward;
     }
 
-    void RotateTurret()
+    float? RotateTurret()
     {
-        float? angle = CalculateAngle(true);
+        float? angle = CalculateAngle(false);
 
-        if(angle.HasValue)
-            turretBase.localEulerAngles=new Vector3(360f-angle.Value, 0, 0);
+        if (angle.HasValue)
+            turretBase.localEulerAngles = new Vector3(360f - angle.Value, 0, 0);
+
+        return angle;
     }
     float? CalculateAngle(bool low)
     {
@@ -43,7 +54,7 @@ public class FireShell : MonoBehaviour
         float y = targetDir.y;
 
         targetDir.y = 0;
-        float x = targetDir.magnitude;
+        float x = targetDir.magnitude - 1;
         float gravity = 9.8f;
         float sSqrt = speed * speed;
         float underTheSqrRoot = (sSqrt * sSqrt) - gravity * (gravity * x * x + 2 * y * sSqrt);
