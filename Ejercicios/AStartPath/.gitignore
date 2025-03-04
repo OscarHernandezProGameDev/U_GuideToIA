@@ -71,8 +71,3 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
-Ejercicios/SimpleAutoPilot/.vsconfig
-Ejercicios/Simple AI Pet/.vsconfig
-Ejercicios/Acceleration/.vsconfig
-Ejercicios/Trajectories/.vsconfig
-Ejercicios/AStartPath/.vsconfig
