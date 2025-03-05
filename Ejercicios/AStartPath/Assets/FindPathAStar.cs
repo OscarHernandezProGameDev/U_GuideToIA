@@ -101,11 +101,44 @@ public class FindPathAStar : MonoBehaviour
 
     void Search(PathMaker thisNode)
     {
-        if(thisNode.Equals(goalNode))
+        if (thisNode.Equals(goalNode))
         {
             done = true;
 
             return;
         }
+
+        foreach (MapLocation dir in maze.directions)
+        {
+            MapLocation neighbour = dir + thisNode.location;
+
+            if (maze.map[neighbour.x, neighbour.z] == 1)
+                continue;
+
+            if (neighbour.x < 1 || neighbour.x > maze.width || neighbour.z < 1 || neighbour.z > maze.depth)
+                continue;
+
+            if (IsClosed(neighbour))
+                continue;
+
+            // G = distancia desde la ubicación al punto a
+            float G = Vector2.Distance(thisNode.location.ToVector(), neighbour.ToVector()) + thisNode.G;
+            // H= distancia entre el vecino y el objetivo
+            float H = Vector2.Distance(neighbour.ToVector(), goalNode.location.ToVector());
+            float F = G + H;
+
+            GameObject pathBlock= Instantiate(pathP, new Vector3(neighbour.x * maze.scale, 0, neighbour.z * maze.scale), Quaternion.identity)
+        }
+    }
+
+    bool IsClosed(MapLocation marker)
+    {
+        foreach (PathMaker n in closed)
+        {
+            if (n.location.Equals(marker))
+                return true;
+        }
+
+        return false;
     }
 }
