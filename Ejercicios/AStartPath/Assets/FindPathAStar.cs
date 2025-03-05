@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Timeline;
 
 public class PathMaker
 {
@@ -55,9 +56,9 @@ public class FindPathAStar : MonoBehaviour
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.P))
-        {
             BeginSearch();
-        }
+        if (Input.GetKeyDown(KeyCode.C))
+            Search(lastPos);
     }
     void RemoveAllMarkers()
     {
@@ -127,16 +128,51 @@ public class FindPathAStar : MonoBehaviour
             float H = Vector2.Distance(neighbour.ToVector(), goalNode.location.ToVector());
             float F = G + H;
 
-            GameObject pathBlock= Instantiate(pathP, new Vector3(neighbour.x * maze.scale, 0, neighbour.z * maze.scale), Quaternion.identity)
-        }
-    }
+            GameObject pathBlock = Instantiate(pathP, new Vector3(neighbour.x * maze.scale, 0, neighbour.z * maze.scale), Quaternion.identity);
+            TextMesh[] values = pathBlock.GetComponentsInChildren<TextMesh>();
 
+            values[0].text = $"G: {G}";
+            values[1].text = $"H: {H}";
+            values[2].text = $"F: {F}";
+
+            if (!UpdateMarker(neighbour, G, H, F, thisNode))
+                open.Add(new PathMaker(neighbour, G, H, F, pathBlock, thisNode));
+        }
+
+        open = open.OrderBy(p => p.F).ThenBy(p => p.H).ToList();
+
+        PathMaker pm = open.ElementAt(0);
+
+        closed.Add(pm);
+        open.RemoveAt(0);
+        pm.maker.GetComponent<Renderer>().material = closedMaterial;
+        lastPos = pm;
+
+    }
     bool IsClosed(MapLocation marker)
     {
         foreach (PathMaker n in closed)
         {
             if (n.location.Equals(marker))
                 return true;
+        }
+
+        return false;
+    }
+
+    bool UpdateMarker(MapLocation pos, float g, float h, float f, PathMaker prt)
+    {
+        foreach (PathMaker p in open)
+        {
+            if (p.location.Equals(pos))
+            {
+                p.G = g;
+                p.H = h;
+                p.F = f;
+                p.parent = prt;
+
+                return true;
+            }
         }
 
         return false;
