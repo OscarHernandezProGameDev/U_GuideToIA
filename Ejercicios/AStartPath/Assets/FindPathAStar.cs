@@ -68,7 +68,6 @@ public class FindPathAStar : MonoBehaviour
             Destroy(marker);
         }
     }
-
     void BeginSearch()
     {
         done = false;
@@ -92,5 +91,21 @@ public class FindPathAStar : MonoBehaviour
         Vector3 goalLocation = new Vector3(locations[1].x * maze.scale, 0, locations[1].z * maze.scale);
 
         goalNode = new PathMaker(new MapLocation(locations[1].x, locations[1].z), 0, 0, 0, Instantiate(end, goalLocation, Quaternion.identity), null);
+
+        open.Clear();
+        closed.Clear();
+
+        open.Add(startNode);
+        lastPos = startNode;
+    }
+
+    void Search(PathMaker thisNode)
+    {
+        if(thisNode.Equals(goalNode))
+        {
+            done = true;
+
+            return;
+        }
     }
 }
