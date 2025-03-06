@@ -1446,6 +1446,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1437566746705059459}
+  - component: {fileID: 2713447972708953233}
   m_Layer: 0
   m_Name: BlueTank
   m_TagString: Untagged
@@ -1453,6 +1454,30 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &2713447972708953233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2713447972708953232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61a57b7cca7fdcbf68ea94b49f42509d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waypoints:
+  - {fileID: 1504112704}
+  - {fileID: 1974819671}
+  - {fileID: 932742259}
+  - {fileID: 1190662142}
+  - {fileID: 1580089915}
+  - {fileID: 127446769}
+  - {fileID: 1225196240}
+  - {fileID: 1779320840}
+  - {fileID: 1870058298}
+  speed: 10
+  rotSpeed: 5
 --- !u!33 &2906081035041282102
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1836,6 +1861,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9048989675280529225}
+  - component: {fileID: 9048989675280529226}
   m_Layer: 0
   m_Name: RedTank
   m_TagString: Untagged
@@ -2143,6 +2169,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7871142010654116010}
+  - component: {fileID: 7871142010654116011}
   m_Layer: 0
   m_Name: YellowTank
   m_TagString: Untagged
@@ -2473,6 +2500,7 @@ MonoBehaviour:
   - {fileID: 1779320840}
   - {fileID: 1870058298}
   speed: 10
+  rotSpeed: 5
 --- !u!4 &7871142010654116010
 Transform:
   m_ObjectHideFlags: 0
@@ -2489,6 +2517,30 @@ Transform:
   - {fileID: 2693376861253237523}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+--- !u!114 &7871142010654116011
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6584456359551941305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61a57b7cca7fdcbf68ea94b49f42509d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waypoints:
+  - {fileID: 1504112704}
+  - {fileID: 1974819671}
+  - {fileID: 932742259}
+  - {fileID: 1190662142}
+  - {fileID: 1580089915}
+  - {fileID: 127446769}
+  - {fileID: 1225196240}
+  - {fileID: 1779320840}
+  - {fileID: 1870058298}
+  speed: 10
+  rotSpeed: 5
 --- !u!4 &8076435781734483058
 Transform:
   m_ObjectHideFlags: 0
@@ -2647,6 +2699,30 @@ Transform:
   - {fileID: 3877416906662462704}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+--- !u!114 &9048989675280529226
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5462622198115272026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61a57b7cca7fdcbf68ea94b49f42509d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waypoints:
+  - {fileID: 1504112704}
+  - {fileID: 1974819671}
+  - {fileID: 932742259}
+  - {fileID: 1190662142}
+  - {fileID: 1580089915}
+  - {fileID: 127446769}
+  - {fileID: 1225196240}
+  - {fileID: 1779320840}
+  - {fileID: 1870058298}
+  speed: 10
+  rotSpeed: 5
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
