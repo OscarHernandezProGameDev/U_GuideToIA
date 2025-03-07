@@ -5,10 +5,10 @@ using UnityEngine;
 
 public class Graph
 {
+    public List<Node> pathList = new List<Node>();
+
     List<Edge> edges = new List<Edge>();
     List<Node> nodes = new List<Node>();
-    List<Node> pathList = new List<Node>();
-
     public void AddNode(GameObject id)
     {
         Node node = new Node(id);
@@ -23,6 +23,7 @@ public class Graph
         if (from != null && to != null)
         {
             Edge e = new Edge(from, to);
+            edges.Add(e);
             from.edgeList.Add(e);
         }
     }
@@ -110,7 +111,7 @@ public class Graph
                 {
                     neightbour.cameFrom = thisNode;
                     neightbour.g = tentative_g_score;
-                    neightbour.h = Distance(neightbour, end);
+                    neightbour.h = Distance(thisNode, end);
                     neightbour.f = neightbour.g + neightbour.h;
                 }
             }
@@ -137,7 +138,7 @@ public class Graph
             if (l[i].f < lowestf)
             {
                 lowestf = l[i].f;
-                iteratorCount = i;
+                iteratorCount = count;
             }
             count++;
         }
