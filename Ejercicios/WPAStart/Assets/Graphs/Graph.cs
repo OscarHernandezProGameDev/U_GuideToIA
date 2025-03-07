@@ -27,6 +27,21 @@ public class Graph
         }
     }
 
+    public void ReconstructPath(Node startId, Node endId)
+    {
+        pathList.Clear();
+        pathList.Add(endId);
+
+        var p = endId.cameFrom;
+
+        while (p != startId && p != null)
+        {
+            pathList.Insert(0, p);
+            p = p.cameFrom;
+        }
+        pathList.Insert(0, startId);
+    }
+
     private Node FindNode(GameObject id)
     {
         foreach (Node n in nodes)
@@ -63,7 +78,7 @@ public class Graph
 
             if (thisNode.GetId() == endId)
             {
-                // ReconstructPath(start,end);
+                ReconstructPath(start, end);
 
                 return true;
             }
