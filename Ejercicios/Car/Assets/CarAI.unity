@@ -301,8 +301,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.025256015, y: 0.74350834, z: -0.028125148, w: -0.66765743}
-  m_LocalPosition: {x: 1.8915641, y: 0.59282696, z: 7.5729046}
+  m_LocalRotation: {x: -0.09967148, y: -0.21699375, z: 0.022278279, w: -0.97081566}
+  m_LocalPosition: {x: -6.380826, y: 2.2857528, z: -9.088898}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -393,6 +393,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WC: {fileID: 0}
   torque: 200
+  wheelMesh: {fileID: 0}
 --- !u!1 &1981850778
 GameObject:
   m_ObjectHideFlags: 0
@@ -508,10 +509,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 4514150267183705789, guid: cee848381ce4c475e8c14e1a67ad1ddb, type: 3}
-      propertyPath: m_RootOrder
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4514150267183705789, guid: cee848381ce4c475e8c14e1a67ad1ddb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.6376281
       objectReference: {fileID: 0}
@@ -615,6 +612,10 @@ PrefabInstance:
     - target: {fileID: 2090753674530055042, guid: 55117ef9c4b29485f98ce5a8d89b16e1, type: 3}
       propertyPath: m_Name
       value: TruckTyre
+      objectReference: {fileID: 0}
+    - target: {fileID: 2090753674530055042, guid: 55117ef9c4b29485f98ce5a8d89b16e1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
