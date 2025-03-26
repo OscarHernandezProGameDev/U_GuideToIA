@@ -7,6 +7,8 @@ public class Drive : MonoBehaviour
     public WheelCollider WC;
     public float torque = 200;
     public GameObject wheelMesh;
+    public float maxSteerAngle = 30;
+    public bool canTorn = false;
 
     // Start is called before the first frame update
     void Start()
@@ -14,13 +16,18 @@ public class Drive : MonoBehaviour
         WC = GetComponent<WheelCollider>();
     }
 
-    void Go(float accel)
+    void Go(float accel, float steer)
     {
         accel = Mathf.Clamp(accel, -1, 1);
 
         float thrustTorque = accel * torque;
 
         WC.motorTorque = thrustTorque;
+        if (canTorn)
+        {
+            steer = Mathf.Clamp(steer, -1, 1) * maxSteerAngle;
+            WC.steerAngle = steer;
+        }
 
         Quaternion quat;
         Vector3 position;
@@ -34,7 +41,8 @@ public class Drive : MonoBehaviour
     void Update()
     {
         float a = Input.GetAxis("Vertical");
+        float s = Input.GetAxis("Horizontal");
 
-        Go(a);
+        Go(a, s);
     }
 }
