@@ -10,13 +10,7 @@ public class Drive : MonoBehaviour
     public float maxSteerAngle = 30;
     public bool canTorn = false;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        WC = GetComponent<WheelCollider>();
-    }
-
-    void Go(float accel, float steer)
+    public void Go(float accel, float steer)
     {
         accel = Mathf.Clamp(accel, -1, 1);
 
@@ -37,7 +31,13 @@ public class Drive : MonoBehaviour
         wheelMesh.transform.rotation = quat;
     }
 
-    // Update is called once per frame
+    // Start is called before the first frame update
+    void Start()
+    {
+        WC = GetComponent<WheelCollider>();
+    }
+
+    /*
     void Update()
     {
         float a = Input.GetAxis("Vertical");
@@ -45,4 +45,5 @@ public class Drive : MonoBehaviour
 
         Go(a, s);
     }
+    */
 }
