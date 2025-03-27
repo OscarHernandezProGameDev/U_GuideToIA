@@ -5,8 +5,8 @@ using UnityEngine;
 public class Drive : MonoBehaviour
 {
     public WheelCollider WC;
-    public float torque = 200;
     public GameObject wheelMesh;
+    public float maxTorque = 200;
     public float maxSteerAngle = 60;
     public float maxBrakeTorque = 500;
     public bool canTorn = false;
@@ -15,7 +15,7 @@ public class Drive : MonoBehaviour
     {
         accel = Mathf.Clamp(accel, -1, 1);
 
-        float thrustTorque = accel * torque;
+        float thrustTorque = accel * maxTorque;
 
         WC.motorTorque = thrustTorque;
         if (canTorn)

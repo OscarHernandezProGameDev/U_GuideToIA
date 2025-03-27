@@ -32,6 +32,11 @@ public class AIController : MonoBehaviour
         float s = Mathf.Clamp(targetAngle * steeringSensitivity, -1, 1) * Mathf.Sign(rb.velocity.magnitude);
         float b = 0;
 
+        if (distanceToTarget < 10)
+        {
+            b = 0.5f;
+        }
+
         foreach (var d in ds)
             d.Go(a, s, b);
 
