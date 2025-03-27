@@ -6,6 +6,7 @@ public class AIController : MonoBehaviour
 {
     public Circuit circuit;
     public float steeringSensitivity = 0.01f;
+    public GameObject brakeLight;
 
     Drive[] ds;
     Vector3 target;
@@ -27,13 +28,23 @@ public class AIController : MonoBehaviour
         float distanceToTarget = Vector3.Distance(target, transform.position);
         float targetAngle = Mathf.Atan2(localTarget.x, localTarget.z) * Mathf.Rad2Deg;
 
-        float a = 0.5f;
+        float a = 50f;
         float s = Mathf.Clamp(targetAngle * steeringSensitivity, -1, 1) * Mathf.Sign(rb.velocity.magnitude);
+        float b = 0;
 
         foreach (var d in ds)
-            d.Go(a, s);
+            d.Go(a, s, b);
 
-        if (distanceToTarget < 6)
+        if (b > 0)
+        {
+            brakeLight.SetActive(true);
+        }
+        else
+        {
+            brakeLight.SetActive(false);
+        }
+
+        if (distanceToTarget < 4)
         {
             currentWP++;
             if (currentWP >= circuit.waypoints.Length)

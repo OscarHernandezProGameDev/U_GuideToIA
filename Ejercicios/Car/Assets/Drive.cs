@@ -7,10 +7,11 @@ public class Drive : MonoBehaviour
     public WheelCollider WC;
     public float torque = 200;
     public GameObject wheelMesh;
-    public float maxSteerAngle = 30;
+    public float maxSteerAngle = 60;
+    public float maxBrakeTorque = 500;
     public bool canTorn = false;
 
-    public void Go(float accel, float steer)
+    public void Go(float accel, float steer, float brake)
     {
         accel = Mathf.Clamp(accel, -1, 1);
 
@@ -21,6 +22,11 @@ public class Drive : MonoBehaviour
         {
             steer = Mathf.Clamp(steer, -1, 1) * maxSteerAngle;
             WC.steerAngle = steer;
+        }
+        else
+        {
+            brake = Mathf.Clamp(brake, -1, 1) * maxBrakeTorque;
+            WC.brakeTorque = brake;
         }
 
         Quaternion quat;
