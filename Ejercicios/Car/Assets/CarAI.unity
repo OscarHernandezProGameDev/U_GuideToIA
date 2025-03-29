@@ -1698,17 +1698,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 559272019468727987, guid: cee848381ce4c475e8c14e1a67ad1ddb, type: 3}
-      propertyPath: maxTorque
-      value: 2000
-      objectReference: {fileID: 0}
-    - target: {fileID: 559272019468727987, guid: cee848381ce4c475e8c14e1a67ad1ddb, type: 3}
-      propertyPath: maxSteerAngle
-      value: 100
-      objectReference: {fileID: 0}
     - target: {fileID: 4514150267183705789, guid: cee848381ce4c475e8c14e1a67ad1ddb, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -109.25
+      value: -114.4
       objectReference: {fileID: 0}
     - target: {fileID: 4514150267183705789, guid: cee848381ce4c475e8c14e1a67ad1ddb, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1720,15 +1712,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4514150267183705789, guid: cee848381ce4c475e8c14e1a67ad1ddb, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.7071068
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 4514150267183705789, guid: cee848381ce4c475e8c14e1a67ad1ddb, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4514150267183705789, guid: cee848381ce4c475e8c14e1a67ad1ddb, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.7071068
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 4514150267183705789, guid: cee848381ce4c475e8c14e1a67ad1ddb, type: 3}
       propertyPath: m_LocalRotation.z
@@ -1740,7 +1732,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4514150267183705789, guid: cee848381ce4c475e8c14e1a67ad1ddb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -270
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 4514150267183705789, guid: cee848381ce4c475e8c14e1a67ad1ddb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -1750,70 +1742,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Car
       objectReference: {fileID: 0}
-    - target: {fileID: 5411593339557812132, guid: cee848381ce4c475e8c14e1a67ad1ddb, type: 3}
-      propertyPath: m_ForwardFriction.m_Stiffness
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5411593339557812132, guid: cee848381ce4c475e8c14e1a67ad1ddb, type: 3}
-      propertyPath: m_SidewaysFriction.m_Stiffness
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5425777984954181013, guid: cee848381ce4c475e8c14e1a67ad1ddb, type: 3}
-      propertyPath: m_ForwardFriction.m_Stiffness
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5425777984954181013, guid: cee848381ce4c475e8c14e1a67ad1ddb, type: 3}
-      propertyPath: m_SidewaysFriction.m_Stiffness
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5548885288092971265, guid: cee848381ce4c475e8c14e1a67ad1ddb, type: 3}
-      propertyPath: maxTorque
-      value: 2000
-      objectReference: {fileID: 0}
-    - target: {fileID: 5548885288092971265, guid: cee848381ce4c475e8c14e1a67ad1ddb, type: 3}
-      propertyPath: maxSteerAngle
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 6220651432017998883, guid: cee848381ce4c475e8c14e1a67ad1ddb, type: 3}
-      propertyPath: maxTorque
-      value: 2000
-      objectReference: {fileID: 0}
-    - target: {fileID: 6220651432017998883, guid: cee848381ce4c475e8c14e1a67ad1ddb, type: 3}
-      propertyPath: maxSteerAngle
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 6693730011327376707, guid: cee848381ce4c475e8c14e1a67ad1ddb, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6840824629866818963, guid: cee848381ce4c475e8c14e1a67ad1ddb, type: 3}
-      propertyPath: m_ForwardFriction.m_Stiffness
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6840824629866818963, guid: cee848381ce4c475e8c14e1a67ad1ddb, type: 3}
-      propertyPath: m_SidewaysFriction.m_Stiffness
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7048517413631932973, guid: cee848381ce4c475e8c14e1a67ad1ddb, type: 3}
-      propertyPath: maxTorque
-      value: 2000
-      objectReference: {fileID: 0}
-    - target: {fileID: 7048517413631932973, guid: cee848381ce4c475e8c14e1a67ad1ddb, type: 3}
-      propertyPath: maxSteerAngle
-      value: 100
-      objectReference: {fileID: 0}
     - target: {fileID: 7391046820004511409, guid: cee848381ce4c475e8c14e1a67ad1ddb, type: 3}
       propertyPath: circuit
       value: 
       objectReference: {fileID: 1859860267}
-    - target: {fileID: 7926709313015101491, guid: cee848381ce4c475e8c14e1a67ad1ddb, type: 3}
-      propertyPath: m_ForwardFriction.m_Stiffness
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7926709313015101491, guid: cee848381ce4c475e8c14e1a67ad1ddb, type: 3}
-      propertyPath: m_SidewaysFriction.m_Stiffness
-      value: 5
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

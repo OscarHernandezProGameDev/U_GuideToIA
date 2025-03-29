@@ -47,9 +47,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WC: {fileID: 0}
   wheelMesh: {fileID: 4514150267184198281}
-  maxTorque: 2000
-  maxSteerAngle: 60
-  maxBrakeTorque: 500
+  maxTorque: 300
+  maxSteerAngle: 90
+  maxBrakeTorque: 5000
   canTorn: 0
 --- !u!146 &5425777984954181013
 WheelCollider:
@@ -323,9 +323,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WC: {fileID: 0}
   wheelMesh: {fileID: 4514150267184198279}
-  maxTorque: 2000
-  maxSteerAngle: 60
-  maxBrakeTorque: 500
+  maxTorque: 300
+  maxSteerAngle: 90
+  maxBrakeTorque: 5000
   canTorn: 0
 --- !u!146 &7926709313015101491
 WheelCollider:
@@ -1317,6 +1317,7 @@ MonoBehaviour:
   circuit: {fileID: 0}
   steeringSensitivity: 0.01
   brakeLight: {fileID: 3368215594709082368}
+  tracker: {fileID: 0}
 --- !u!114 &6693730011327376707
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1734,9 +1735,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WC: {fileID: 0}
   wheelMesh: {fileID: 4514150267184198277}
-  maxTorque: 2000
-  maxSteerAngle: 60
-  maxBrakeTorque: 500
+  maxTorque: 300
+  maxSteerAngle: 90
+  maxBrakeTorque: 5000
   canTorn: 1
 --- !u!146 &5411593339557812132
 WheelCollider:
@@ -1824,9 +1825,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WC: {fileID: 0}
   wheelMesh: {fileID: 4514150267184198275}
-  maxTorque: 2000
-  maxSteerAngle: 60
-  maxBrakeTorque: 500
+  maxTorque: 300
+  maxSteerAngle: 90
+  maxBrakeTorque: 5000
   canTorn: 1
 --- !u!146 &6840824629866818963
 WheelCollider:
