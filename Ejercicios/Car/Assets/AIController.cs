@@ -28,14 +28,23 @@ public class AIController : MonoBehaviour
         float distanceToTarget = Vector3.Distance(target, transform.position);
         float targetAngle = Mathf.Atan2(localTarget.x, localTarget.z) * Mathf.Rad2Deg;
 
-        float a = 50f;
         float s = Mathf.Clamp(targetAngle * steeringSensitivity, -1, 1) * Mathf.Sign(rb.velocity.magnitude);
+
+        float corner = Mathf.Clamp(Mathf.Abs(targetAngle), 0, 90);
+        float cornerFactor = corner / 90.0f;
+
+        float a = 1f;
+
+        if (corner > 20 && rb.velocity.magnitude > 10)
+            a = Mathf.Lerp(0, 1, 1 - cornerFactor);
+
         float b = 0;
 
+        if (corner > 10 && rb.velocity.magnitude > 10)
+            b = Mathf.Lerp(0, 1, cornerFactor);
+
         if (distanceToTarget < 10)
-        {
             b = 0.5f;
-        }
 
         foreach (var d in ds)
             d.Go(a, s, b);
