@@ -1241,9 +1241,11 @@ GameObject:
   - component: {fileID: 7391046820004511409}
   - component: {fileID: 6693730011327376707}
   - component: {fileID: 1359387725173522849}
+  - component: {fileID: 7293467333680235318}
+  - component: {fileID: 1811735467359639267}
   m_Layer: 12
   m_Name: Car
-  m_TagString: Untagged
+  m_TagString: car
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1357,6 +1359,43 @@ MonoBehaviour:
   wheelRFront: {fileID: 5411593339557812132}
   wheelLBack: {fileID: 7926709313015101491}
   wheelRBack: {fileID: 5425777984954181013}
+--- !u!114 &7293467333680235318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4514150267184198301}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99a19d3b0cf45bd41868adb0c2a68e87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  avoidPath: 0
+  avoidTime: 0
+  wanderDistance: 4
+  avoidLength: 1
+--- !u!65 &1811735467359639267
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4514150267184198301}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3.023437, y: 1.7147013, z: 6.4931316}
+  m_Center: {x: 0.088634126, y: 0.7743539, z: 0.17103551}
 --- !u!1 &4514150267184198303
 GameObject:
   m_ObjectHideFlags: 0

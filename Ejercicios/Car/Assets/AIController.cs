@@ -23,7 +23,8 @@ public class AIController : MonoBehaviour
     Vector3 target;
     Rigidbody rb;
     int currentWP = 0;
-    int currentTracker = 0;
+    int currentTrackerWP = 0;
+    AVoidDetector avoid;
 
     // Start is called before the first frame update
     void Start()
@@ -38,6 +39,7 @@ public class AIController : MonoBehaviour
         tracker.transform.position = transform.position;
         tracker.transform.rotation = transform.rotation;
 
+        avoid = this.GetComponent<AVoidDetector>();
         this.GetComponent<AntiRoll>().antiRoll = antiRoll;
 
         foreach (Drive drive in ds)
@@ -55,8 +57,15 @@ public class AIController : MonoBehaviour
 
         target = tracker.transform.position;
 
-        Vector3 localTarget = transform.InverseTransformPoint(target);
-        float distanceToTarget = Vector3.Distance(target, transform.position);
+        Vector3 localTarget;
+
+        if (Time.time < avoid.avoidTime)
+            localTarget = tracker.transform.right * avoid.avoidPath;
+        else
+            localTarget = transform.InverseTransformPoint(target);
+
+        //Vector3 localTarget = transform.InverseTransformPoint(target);
+        //float distanceToTarget = Vector3.Distance(target, transform.position);
         float targetAngle = Mathf.Atan2(localTarget.x, localTarget.z) * Mathf.Rad2Deg;
 
         float s = Mathf.Clamp(targetAngle * steeringSensitivity, -1, 1) * Mathf.Sign(rb.velocity.magnitude);
@@ -113,13 +122,13 @@ public class AIController : MonoBehaviour
         if (Vector3.Distance(transform.position, tracker.transform.position) < lookAhead / 2.0f)
             trackerSpeed += 1.0f;
 
-        tracker.transform.LookAt(circuit.waypoints[currentWP].transform.position);
+        tracker.transform.LookAt(circuit.waypoints[currentTrackerWP].transform.position);
         tracker.transform.Translate(0, 0, trackerSpeed * Time.deltaTime);
-        if (Vector3.Distance(tracker.transform.position, circuit.waypoints[currentWP].transform.position) < 1)
+        if (Vector3.Distance(tracker.transform.position, circuit.waypoints[currentTrackerWP].transform.position) < 1)
         {
-            currentWP++;
-            if (currentWP >= circuit.waypoints.Length)
-                currentWP = 0;
+            currentTrackerWP++;
+            if (currentTrackerWP >= circuit.waypoints.Length)
+                currentTrackerWP = 0;
         }
     }
 }
