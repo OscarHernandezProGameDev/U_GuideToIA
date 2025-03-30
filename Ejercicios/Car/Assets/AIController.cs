@@ -57,6 +57,7 @@ public class AIController : MonoBehaviour
 
         target = tracker.transform.position;
 
+        //Vector3 localTarget = transform.InverseTransformPoint(target);
         Vector3 localTarget;
 
         if (Time.time < avoid.avoidTime)
@@ -64,7 +65,6 @@ public class AIController : MonoBehaviour
         else
             localTarget = transform.InverseTransformPoint(target);
 
-        //Vector3 localTarget = transform.InverseTransformPoint(target);
         //float distanceToTarget = Vector3.Distance(target, transform.position);
         float targetAngle = Mathf.Atan2(localTarget.x, localTarget.z) * Mathf.Rad2Deg;
 
@@ -82,6 +82,12 @@ public class AIController : MonoBehaviour
 
         if (corner > brakeCornerMax && rb.velocity.magnitude > brakeVelocityThreshold)
             b = Mathf.Lerp(0, 1, cornerFactor);
+
+        if (avoid.reverse)
+        {
+            a = -1 * a;
+            s = -1 * s;
+        }
 
         //if (distanceToTarget < 10)
         //    b = 0.5f;
@@ -116,11 +122,17 @@ public class AIController : MonoBehaviour
         if (Vector3.Distance(transform.position, tracker.transform.position) > lookAhead)
         {
             trackerSpeed -= 1.0f;
+            if (trackerSpeed < 2)
+                trackerSpeed = 2.0f;
 
             return;
         }
         if (Vector3.Distance(transform.position, tracker.transform.position) < lookAhead / 2.0f)
+        {
             trackerSpeed += 1.0f;
+            if (trackerSpeed > 15.0f)
+                trackerSpeed = 15.0f;
+        }
 
         tracker.transform.LookAt(circuit.waypoints[currentTrackerWP].transform.position);
         tracker.transform.Translate(0, 0, trackerSpeed * Time.deltaTime);

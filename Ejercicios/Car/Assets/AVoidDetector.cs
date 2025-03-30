@@ -8,9 +8,17 @@ public class AVoidDetector : MonoBehaviour
     public float avoidTime = 0;
     public float wanderDistance = 4;
     public float avoidLength = 1;
+    public bool reverse = false;
 
+    Rigidbody rb;
+
+    private void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
     private void OnTriggerExit(Collider other)
     {
+        reverse = false;
         if (gameObject.tag != "car")
             return;
 
@@ -19,16 +27,23 @@ public class AVoidDetector : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (gameObject.tag != "car")
-            return;
+        Vector3 collisionDir = this.transform.InverseTransformPoint(other.gameObject.transform.position);
 
-        Rigidbody otherCar = other.GetComponent<Rigidbody>();
+        if (collisionDir.x > 0 && collisionDir.y > 0)
+        {
+            if (rb.velocity.magnitude < 0)
+                reverse = true;
+            else if (gameObject.tag == "car")
+            {
+                Rigidbody otherCar = other.GetComponent<Rigidbody>();
 
-        avoidTime = Time.time + avoidLength;
+                avoidTime = Time.time + avoidLength;
 
-        Vector3 otherCarLocalTarget = transform.InverseTransformPoint(otherCar.gameObject.transform.position);
-        float otherCarAngle = Mathf.Atan2(otherCarLocalTarget.x, otherCarLocalTarget.z) * Mathf.Rad2Deg;
+                Vector3 otherCarLocalTarget = transform.InverseTransformPoint(otherCar.gameObject.transform.position);
+                float otherCarAngle = Mathf.Atan2(otherCarLocalTarget.x, otherCarLocalTarget.z);
 
-        avoidPath = wanderDistance * -Mathf.Sign(otherCarAngle);
+                avoidPath = wanderDistance * -Mathf.Sign(otherCarAngle);
+            }
+        }
     }
 }
