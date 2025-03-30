@@ -1315,8 +1315,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 388b76e19e291e845ab168765bb34f05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  steeringSensitivity: 0.02
+  lookAhead: 20
+  maxTorque: 200
+  maxSteerAngle: 60
+  maxBrakeTorque: 5000
+  accelCornerMax: 20
+  brakeCornerMax: 5
+  accelVelocityThreshold: 20
+  brakeVelocityThreshold: 10
+  antiRoll: 5000
   circuit: {fileID: 0}
-  steeringSensitivity: 0.01
   brakeLight: {fileID: 3368215594709082368}
   tracker: {fileID: 0}
 --- !u!114 &6693730011327376707

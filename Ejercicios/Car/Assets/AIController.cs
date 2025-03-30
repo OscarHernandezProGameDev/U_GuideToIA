@@ -4,8 +4,18 @@ using UnityEngine;
 
 public class AIController : MonoBehaviour
 {
-    public Circuit circuit;
+    [Header("Car Settings")]
     public float steeringSensitivity = 0.01f;
+    public float lookAhead = 30;
+    public float maxTorque = 200;
+    public float maxSteerAngle = 60;
+    public float maxBrakeTorque = 500;
+    public float accelCornerMax = 20;
+    public float brakeCornerMax = 10;
+    public float accelVelocityThreshold = 20;
+    public float brakeVelocityThreshold = 10;
+    public float antiRoll = 5000f;
+    public Circuit circuit;
     public GameObject brakeLight;
     public GameObject tracker;
 
@@ -14,7 +24,6 @@ public class AIController : MonoBehaviour
     Rigidbody rb;
     int currentWP = 0;
     int currentTracker = 0;
-    float lookAhead = 40;
 
     // Start is called before the first frame update
     void Start()
@@ -28,6 +37,15 @@ public class AIController : MonoBehaviour
         //tracker.GetComponent<MeshRenderer>().enabled = false;
         tracker.transform.position = transform.position;
         tracker.transform.rotation = transform.rotation;
+
+        this.GetComponent<AntiRoll>().antiRoll = antiRoll;
+
+        foreach (Drive drive in ds)
+        {
+            drive.maxTorque = maxTorque;
+            drive.maxSteerAngle = maxSteerAngle;
+            drive.maxBrakeTorque = maxBrakeTorque;
+        }
     }
 
     // Update is called once per frame
@@ -48,16 +66,16 @@ public class AIController : MonoBehaviour
 
         float a = 1f;
 
-        if (corner > 20 && rb.velocity.magnitude > 10)
+        if (corner > accelCornerMax && rb.velocity.magnitude > accelVelocityThreshold)
             a = Mathf.Lerp(0, 1, 1 - cornerFactor);
 
         float b = 0;
 
-        if (corner > 10 && rb.velocity.magnitude > 10)
+        if (corner > brakeCornerMax && rb.velocity.magnitude > brakeVelocityThreshold)
             b = Mathf.Lerp(0, 1, cornerFactor);
 
-        if (distanceToTarget < 10)
-            b = 0.5f;
+        //if (distanceToTarget < 10)
+        //    b = 0.5f;
 
         foreach (var d in ds)
             d.Go(a, s, b);
@@ -82,14 +100,21 @@ public class AIController : MonoBehaviour
         */
     }
 
+    float trackerSpeed = 15.0f;
     void ProgressTracer()
     {
         Debug.DrawLine(transform.position, tracker.transform.position);
         if (Vector3.Distance(transform.position, tracker.transform.position) > lookAhead)
+        {
+            trackerSpeed -= 1.0f;
+
             return;
+        }
+        if (Vector3.Distance(transform.position, tracker.transform.position) < lookAhead / 2.0f)
+            trackerSpeed += 1.0f;
 
         tracker.transform.LookAt(circuit.waypoints[currentWP].transform.position);
-        tracker.transform.Translate(0, 0, 1.0f);
+        tracker.transform.Translate(0, 0, trackerSpeed * Time.deltaTime);
         if (Vector3.Distance(tracker.transform.position, circuit.waypoints[currentWP].transform.position) < 1)
         {
             currentWP++;
