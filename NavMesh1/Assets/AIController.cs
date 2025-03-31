@@ -6,6 +6,7 @@ using UnityEngine.AI;
 public class AIController : MonoBehaviour
 {
     public NavMeshAgent agent;
+    public GameObject target;
 
     Animator anim;
 
@@ -19,6 +20,7 @@ public class AIController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        agent.SetDestination(target.transform.position);
         if (agent.remainingDistance < 2)
         {
             anim.SetBool("isMoving", false);
