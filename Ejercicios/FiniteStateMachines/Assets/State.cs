@@ -61,7 +61,7 @@ public class State
 
 public class Idle : State
 {
-    public Idle(GameObject _npc, NavMeshAgent _agent, Animation _anim, Transform _player) : base(_npc, _agent, _anim, _player)
+    public Idle(GameObject _npc, NavMeshAgent _agent, Animator _anim, Transform _player) : base(_npc, _agent, _anim, _player)
     {
         name = STATE.IDLE;
     }
@@ -79,7 +79,6 @@ public class Idle : State
             nextState = new Patrol(npc, agent, anim, player);
             stage = EVENT.EXIT;
         }
-        base.Update();
     }
 
     public override void Exit()
@@ -117,7 +116,6 @@ public class Patrol : State
                 currentIndex++;
             agent.SetDestination(GameEnvironment.Instance.Checkpoints[currentIndex].transform.position);
         }
-        base.Update();
     }
 
     public override void Exit()
