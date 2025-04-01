@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
+
 public class State
 {
     public enum STATE
@@ -179,12 +180,41 @@ public class Pursue : State
             }
         }
     }
+
+    public override void Exit()
+    {
+        anim.ResetTrigger("isRunning");
+        base.Exit();
+    }
 }
 
 public class Attack : State
 {
+    float rotationSpeed = 2.0f;
+    AudioSource shoot;
+
     public Attack(GameObject _npc, NavMeshAgent _agent, Animator _anim, Transform _player) : base(_npc, _agent, _anim, _player)
     {
         name = STATE.ATTACK;
+        shoot = npc.GetComponent<AudioSource>();
+    }
+
+    public override void Enter()
+    {
+        anim.SetTrigger("isShooting");
+        agent.isStopped = true;
+        shoot.Play();
+        base.Enter();
+    }
+
+    public override void Update()
+    {
+        base.Update();
+    }
+
+    public override void Exit()
+    {
+        anim.ResetTrigger("isShooting");
+        base.Exit();
     }
 }
