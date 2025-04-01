@@ -57,6 +57,27 @@ public class State
 
         return this;
     }
+
+    public bool CanSeePlayer()
+    {
+        Vector3 direction = player.position - npc.transform.position;
+        float angle = Vector3.Angle(direction, npc.transform.forward);
+
+        if (direction.magnitude < visDist && angle < visAngle)
+            return true;
+
+        return false;
+    }
+
+    public bool CanAttachPlayer()
+    {
+        Vector3 direction = player.position - npc.transform.position;
+
+        if (direction.magnitude < shootDist)
+            return true;
+
+        return false;
+    }
 }
 
 public class Idle : State
@@ -122,5 +143,48 @@ public class Patrol : State
     {
         anim.ResetTrigger("isWalking");
         base.Exit();
+    }
+}
+
+public class Pursue : State
+{
+    public Pursue(GameObject _npc, NavMeshAgent _agent, Animator _anim, Transform _player) : base(_npc, _agent, _anim, _player)
+    {
+        name = STATE.PURSUE;
+        agent.speed = 5;
+        agent.isStopped = false;
+        agent.isStopped = false;
+    }
+
+    public override void Enter()
+    {
+        anim.SetTrigger("isRunning");
+        base.Enter();
+    }
+
+    public override void Update()
+    {
+        agent.SetDestination(player.position);
+        if (agent.hasPath)
+        {
+            if (CanAttachPlayer())
+            {
+                nextState = new Attack(npc, agent, anim, player);
+                stage = EVENT.EXIT;
+            }
+            else if (!CanSeePlayer())
+            {
+                nextState = new Patrol(npc, agent, anim, player);
+                stage = EVENT.EXIT;
+            }
+        }
+    }
+}
+
+public class Attack : State
+{
+    public Attack(GameObject _npc, NavMeshAgent _agent, Animator _anim, Transform _player) : base(_npc, _agent, _anim, _player)
+    {
+        name = STATE.ATTACK;
     }
 }
