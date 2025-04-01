@@ -96,7 +96,12 @@ public class Idle : State
 
     public override void Update()
     {
-        if (Random.Range(0, 100) < 10)
+        if (CanSeePlayer())
+        {
+            nextState = new Pursue(npc, agent, anim, player);
+            stage = EVENT.EXIT;
+        }
+        else if (Random.Range(0, 100) < 10)
         {
             nextState = new Patrol(npc, agent, anim, player);
             stage = EVENT.EXIT;
@@ -123,7 +128,20 @@ public class Patrol : State
 
     public override void Enter()
     {
-        currentIndex = 0;
+        float lastDist = Mathf.Infinity;
+
+        for (int i = 0; i < GameEnvironment.Instance.Checkpoints.Count; i++)
+        {
+            GameObject thisWP = GameEnvironment.Instance.Checkpoints[i];
+            float distance = Vector3.Distance(npc.transform.position, thisWP.transform.position);
+
+            if (distance < lastDist)
+            {
+                currentIndex = i - 1;
+                lastDist = distance;
+            }
+        }
+
         anim.SetTrigger("isWalking");
         base.Enter();
     }
@@ -137,6 +155,11 @@ public class Patrol : State
             else
                 currentIndex++;
             agent.SetDestination(GameEnvironment.Instance.Checkpoints[currentIndex].transform.position);
+        }
+        if (CanSeePlayer())
+        {
+            nextState = new Pursue(npc, agent, anim, player);
+            stage = EVENT.EXIT;
         }
     }
 
@@ -209,12 +232,23 @@ public class Attack : State
 
     public override void Update()
     {
-        base.Update();
+        Vector3 direction = player.position - npc.transform.position;
+        float angle = Vector3.Angle(direction, npc.transform.forward);
+
+        direction.y = 0;
+        npc.transform.rotation = Quaternion.Slerp(npc.transform.rotation, Quaternion.LookRotation(direction), Time.deltaTime * rotationSpeed);
+
+        if (!CanAttachPlayer())
+        {
+            nextState = new Idle(npc, agent, anim, player);
+            stage = EVENT.EXIT;
+        }
     }
 
     public override void Exit()
     {
         anim.ResetTrigger("isShooting");
+        shoot.Stop();
         base.Exit();
     }
 }
