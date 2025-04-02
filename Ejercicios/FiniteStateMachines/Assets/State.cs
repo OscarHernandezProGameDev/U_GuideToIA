@@ -1,19 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class State
 {
-    public enum STATE
-    {
-        IDLE,
-        PATROL,
-        PURSUE,
-        ATTACK,
-        SLEEP
-    };
+    public enum STATE { IDLE, PATROL, PURSUE, ATTACK, SLEEP, RUNAWAY };
 
     public enum EVENT
     {
@@ -30,6 +24,8 @@ public class State
 
     float visDist = 10f;
     float visAngle = 30f;
+    float behindDist = 2f;
+    float behindAngle = 30f;
     float shootDist = 7f;
 
     public State(GameObject _npc, NavMeshAgent _agent, Animator _anim, Transform _player)
@@ -65,6 +61,17 @@ public class State
         float angle = Vector3.Angle(direction, npc.transform.forward);
 
         if (direction.magnitude < visDist && angle < visAngle)
+            return true;
+
+        return false;
+    }
+
+    public bool IsPlayerBehind()
+    {
+        Vector3 direction = npc.transform.position - player.position;
+        float angle = Vector3.Angle(direction, npc.transform.forward);
+
+        if (direction.magnitude < behindDist && angle < behindAngle)
             return true;
 
         return false;
@@ -161,6 +168,11 @@ public class Patrol : State
             nextState = new Pursue(npc, agent, anim, player);
             stage = EVENT.EXIT;
         }
+        else if (IsPlayerBehind())
+        {
+            nextState = new RunAway(npc, agent, anim, player);
+            stage = EVENT.EXIT;
+        }
     }
 
     public override void Exit()
@@ -176,7 +188,6 @@ public class Pursue : State
     {
         name = STATE.PURSUE;
         agent.speed = 5;
-        agent.isStopped = false;
         agent.isStopped = false;
     }
 
@@ -196,9 +207,9 @@ public class Pursue : State
                 nextState = new Attack(npc, agent, anim, player);
                 stage = EVENT.EXIT;
             }
-            else if (!CanSeePlayer())
+            else if (IsPlayerBehind())
             {
-                nextState = new Patrol(npc, agent, anim, player);
+                nextState = new RunAway(npc, agent, anim, player);
                 stage = EVENT.EXIT;
             }
         }
@@ -249,6 +260,38 @@ public class Attack : State
     {
         anim.ResetTrigger("isShooting");
         shoot.Stop();
+        base.Exit();
+    }
+}
+
+public class RunAway : State
+{
+    public RunAway(GameObject _npc, NavMeshAgent _agent, Animator _anim, Transform _player) : base(_npc, _agent, _anim, _player)
+    {
+        name = STATE.RUNAWAY;
+    }
+
+    public override void Enter()
+    {
+        anim.SetTrigger("isRunning");
+        agent.speed = 6;
+        agent.isStopped = false;
+        agent.SetDestination(GameEnvironment.Instance.CubeSafe.transform.position);
+        base.Enter();
+    }
+
+    public override void Update()
+    {
+        if (agent.remainingDistance < 1)
+        {
+            nextState = new Idle(npc, agent, anim, player);
+            stage = EVENT.EXIT;
+        }
+    }
+
+    public override void Exit()
+    {
+        anim.ResetTrigger("isRunning");
         base.Exit();
     }
 }
