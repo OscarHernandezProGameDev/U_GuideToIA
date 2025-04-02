@@ -23,7 +23,8 @@ public class Bot : MonoBehaviour
         //Seek(target.transform.position);
         //Flee(target.transform.position);
         //Pursue();
-        Evade();
+        //Evade();
+        Wander();
     }
 
     void Seek(Vector3 location)
@@ -61,5 +62,23 @@ public class Bot : MonoBehaviour
         float lookAHead = targetDir.magnitude / (agent.speed + ds.currentSpeed);
 
         Flee(target.transform.position + target.transform.forward * lookAHead);
+    }
+
+    Vector3 wanderTarget = Vector3.zero;
+
+    void Wander()
+    {
+        float wanderRadius = 10f;
+        float wanderDistance = 10f;
+        float wanderJitter = 1f;
+
+        wanderTarget += new Vector3(Random.Range(-1f, 1f) * wanderJitter, 0, Random.Range(-1f, 1f) * wanderJitter);
+        wanderTarget.Normalize();
+        wanderTarget *= wanderRadius;
+
+        Vector3 targetLocal = wanderTarget + new Vector3(0, 0, wanderDistance);
+        Vector3 targetWorld = transform.TransformPoint(targetLocal);
+
+        Seek(targetWorld);
     }
 }
