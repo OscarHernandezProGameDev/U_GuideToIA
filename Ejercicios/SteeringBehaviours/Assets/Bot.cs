@@ -18,7 +18,9 @@ public class Bot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Flee(target.transform.position);
+        //Seek(target.transform.position);
+        //Flee(target.transform.position);
+        Pursue();
     }
 
     void Seek(Vector3 location)
@@ -30,5 +32,23 @@ public class Bot : MonoBehaviour
     {
         Vector3 fleeVector = location - transform.position;
         agent.SetDestination(transform.position - fleeVector);
+    }
+
+    void Pursue()
+    {
+        Vector3 targetDir = target.transform.position - transform.position;
+        float relativeHeading = Vector3.Angle(transform.forward, transform.TransformVector(target.transform.forward));
+        float toTarget = Vector3.Angle(transform.forward, transform.TransformVector(targetDir));
+
+        if ((relativeHeading > 90 && toTarget < 20) || target.GetComponent<Drive>().currentSpeed < 0.01f)
+        {
+            Seek(target.transform.position);
+
+            return;
+        }
+
+        float lookAHead = targetDir.magnitude / (agent.speed + target.GetComponent<Drive>().currentSpeed);
+
+        Seek(target.transform.position + target.transform.forward * lookAHead);
     }
 }
