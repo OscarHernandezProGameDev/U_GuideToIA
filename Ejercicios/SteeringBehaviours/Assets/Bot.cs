@@ -26,8 +26,21 @@ public class Bot : MonoBehaviour
         //Evade();
         //Wander();
         //CleverHide();
+        /*
         if (CanSeeTarget())
             CleverHide();
+        */
+        if (!coolDown)
+        {
+            if (CanSeeTarget() && CanSeeMe())
+            {
+                CleverHide();
+                coolDown = true;
+                Invoke("BehaviourCoolDown", 5);
+            }
+            else
+                Pursue();
+        }
     }
 
     void Seek(Vector3 location)
@@ -150,5 +163,22 @@ public class Bot : MonoBehaviour
         }
 
         return false;
+    }
+    bool CanSeeMe()
+    {
+        Vector3 rayToTarget = transform.position - target.transform.position;
+        float lookAngle = Vector3.Angle(target.transform.forward, rayToTarget);
+
+        if (lookAngle < 60)
+            return true;
+
+        return false;
+    }
+
+    bool coolDown = false;
+
+    void BehaviourCoolDown()
+    {
+        coolDown = false;
     }
 }
