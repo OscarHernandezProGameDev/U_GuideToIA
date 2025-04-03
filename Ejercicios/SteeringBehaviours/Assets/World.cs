@@ -22,11 +22,8 @@ public sealed class World
         }
     }
 
-    public GameObject[] HidingSpots
+    public GameObject[] GetHidingSpots()
     {
-        get
-        {
-            return hidingSpots;
-        }
+        return hidingSpots;
     }
 }

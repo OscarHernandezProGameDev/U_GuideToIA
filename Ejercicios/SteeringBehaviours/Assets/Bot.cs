@@ -24,7 +24,8 @@ public class Bot : MonoBehaviour
         //Flee(target.transform.position);
         //Pursue();
         //Evade();
-        Wander();
+        //Wander();
+        Hide();
     }
 
     void Seek(Vector3 location)
@@ -80,5 +81,25 @@ public class Bot : MonoBehaviour
         Vector3 targetWorld = transform.TransformPoint(targetLocal);
 
         Seek(targetWorld);
+    }
+
+    void Hide()
+    {
+        float dist = Mathf.Infinity;
+        Vector3 choseSpot = Vector3.zero;
+
+        for (int i = 0; i < World.Instance.GetHidingSpots().Length; i++)
+        {
+            Vector3 hideDir = World.Instance.GetHidingSpots()[i].transform.position - target.transform.position;
+            Vector3 hidePos = World.Instance.GetHidingSpots()[i].transform.position + hideDir.normalized * 10;
+
+            if (Vector3.Distance(transform.position, hidePos) < dist)
+            {
+                choseSpot = hidePos;
+                dist = Vector3.Distance(transform.position, hidePos);
+            }
+        }
+
+        Seek(choseSpot);
     }
 }
