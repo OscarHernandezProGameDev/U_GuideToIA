@@ -141,8 +141,9 @@ public class Bot : MonoBehaviour
     {
         RaycastHit raycastInfo;
         Vector3 rayToTarget = target.transform.position - transform.position;
+        float lookAngle = Vector3.Angle(this.transform.forward, rayToTarget);
 
-        if (Physics.Raycast(transform.position, rayToTarget, out raycastInfo))
+        if (lookAngle < 60 && Physics.Raycast(transform.position, rayToTarget, out raycastInfo))
         {
             if (raycastInfo.transform.gameObject.tag == "cop")
                 return true;
