@@ -25,7 +25,9 @@ public class Bot : MonoBehaviour
         //Pursue();
         //Evade();
         //Wander();
-        CleverHide();
+        //CleverHide();
+        if (CanSeeTarget())
+            CleverHide();
     }
 
     void Seek(Vector3 location)
@@ -133,5 +135,19 @@ public class Bot : MonoBehaviour
         hideCol.Raycast(backRay, out info, distance);
 
         Seek(info.point + chosenDir.normalized * 2);
+    }
+
+    bool CanSeeTarget()
+    {
+        RaycastHit raycastInfo;
+        Vector3 rayToTarget = target.transform.position - transform.position;
+
+        if (Physics.Raycast(transform.position, rayToTarget, out raycastInfo))
+        {
+            if (raycastInfo.transform.gameObject.tag == "cop")
+                return true;
+        }
+
+        return false;
     }
 }
