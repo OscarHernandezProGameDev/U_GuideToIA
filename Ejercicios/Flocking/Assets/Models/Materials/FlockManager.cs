@@ -15,11 +15,16 @@ public class FlockManager : MonoBehaviour
     public float minSpeed;
     [Range(0f, 5f)]
     public float maxSpeed;
+    [Range(1f, 10f)]
+    public float neighbourDistance;
+    [Range(1f, 5f)]
+    public float rotationSpeed;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        FM = this;
         allFish = new GameObject[numFish];
 
         for (int i = 0; i < allFish.Length; i++)
@@ -28,7 +33,6 @@ public class FlockManager : MonoBehaviour
 
             allFish[i] = Instantiate(fishPrefab, pos, Quaternion.identity);
         }
-        FM = this;
     }
 
     // Update is called once per frame

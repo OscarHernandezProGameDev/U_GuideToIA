@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.ShaderKeywordFilter;
 using UnityEngine;
 
 public class Flock : MonoBehaviour
@@ -15,6 +16,49 @@ public class Flock : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        ApplyRules();
         transform.Translate(0, 0, speed * Time.deltaTime);
+    }
+
+    private void ApplyRules()
+    {
+        GameObject[] gos;
+
+        gos = FlockManager.FM.allFish;
+
+        Vector3 vcenter = Vector3.zero;
+        Vector3 vavoid = Vector3.zero;
+        float gSpeed = 0.01f;
+        float nDistance;
+        int groupSize = 0;
+
+        foreach (var go in gos)
+        {
+            if (go != this.gameObject)
+            {
+                nDistance = Vector3.Distance(go.transform.position, transform.position);
+                if (nDistance <= FlockManager.FM.neighbourDistance)
+                {
+                    vcenter += go.transform.position;
+                    groupSize++;
+                }
+                if (nDistance < 1.0f)
+                    vavoid = vavoid + (transform.position - go.transform.position);
+
+                Flock anotherFlock = go.GetComponent<Flock>();
+
+                gSpeed += anotherFlock.speed;
+            }
+        }
+        if (groupSize > 0)
+        {
+            vcenter = vcenter / groupSize;
+            speed = gSpeed / groupSize;
+
+            Vector3 direction = (vcenter + vavoid) - transform.position;
+
+            if (direction != Vector3.zero)
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), FlockManager.FM.rotationSpeed * Time.deltaTime);
+        }
     }
 }
