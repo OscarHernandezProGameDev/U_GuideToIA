@@ -62,4 +62,7 @@ public abstract class GAction : MonoBehaviour
         }
         return true;
     }
+
+    public abstract bool PrePerform();
+    public abstract bool PostPerform();
 }
