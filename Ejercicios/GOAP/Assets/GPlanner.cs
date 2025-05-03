@@ -28,7 +28,7 @@ public class GPlanner
 
         foreach (GAction a in actions)
         {
-            if (a.IsAchievableGiven(states.GetStates()))
+            if (a.IsAchievable())
                 usableActions.Add(a);
         }
 
