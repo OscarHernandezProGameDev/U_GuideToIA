@@ -19,7 +19,7 @@ public sealed class GWorld
         get { return instance; }
     }
 
-    public static WorldStates GetWorld()
+    public WorldStates GetWorld()
     {
         return world;
     }
