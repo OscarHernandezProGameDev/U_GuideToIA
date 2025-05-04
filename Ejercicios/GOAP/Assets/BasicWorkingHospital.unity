@@ -2108,7 +2108,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1203368122
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2256,6 +2256,9 @@ PrefabInstance:
       addedObject: {fileID: 1254796079}
     - targetCorrespondingSourceObject: {fileID: 7881807149238628900, guid: d36c43225f9391e4c8810c98eb7ef85e, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 1254796081}
+    - targetCorrespondingSourceObject: {fileID: 7881807149238628900, guid: d36c43225f9391e4c8810c98eb7ef85e, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 1254796078}
   m_SourcePrefab: {fileID: 100100000, guid: d36c43225f9391e4c8810c98eb7ef85e, type: 3}
 --- !u!1 &1254796076 stripped
@@ -2297,12 +2300,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67811354d696ebd49b4d01b87bb58f56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  actionName: Action
+  actionName: GoToWatingRoom
   cost: 1
-  target: {fileID: 1000317771}
-  targetTag: 
+  target: {fileID: 0}
+  targetTag: WaitingArea
   duration: 0
-  preConditions: []
+  preConditions:
+  - key: hasArrived
+    value: 0
   afterEffects:
   - key: isWaiting
     value: 0
@@ -2322,6 +2327,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actions: []
   currentAction: {fileID: 0}
+--- !u!114 &1254796081
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1254796076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 983504afd7c6eda4986ce39909f5b94f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionName: GoToHospital
+  cost: 1
+  target: {fileID: 0}
+  targetTag: Door
+  duration: 2
+  preConditions: []
+  afterEffects:
+  - key: hasArrived
+    value: 0
+  agent: {fileID: 0}
+  running: 0
 --- !u!1 &1300565946
 GameObject:
   m_ObjectHideFlags: 0
@@ -3890,7 +3918,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e82013e5ee894d90b1e90f3cbcdf92f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  states: {fileID: 1592830989}
 --- !u!114 &1592830989
 MonoBehaviour:
   m_ObjectHideFlags: 0
