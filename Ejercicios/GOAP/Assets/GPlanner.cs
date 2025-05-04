@@ -61,8 +61,8 @@ public class GPlanner
         while (n.parent != null)
         {
             if (n.action != null)
-
-                n = n.parent;
+                result.Insert(0, n.action);
+            n = n.parent;
         }
 
         Queue<GAction> queue = new Queue<GAction>();
