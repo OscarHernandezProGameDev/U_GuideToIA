@@ -1513,6 +1513,8 @@ MonoBehaviour:
   preConditions:
   - key: Waiting
     value: 0
+  - key: FreeCubicle
+    value: 0
   afterEffects:
   - key: treatPatient
     value: 0
