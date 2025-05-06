@@ -73,7 +73,7 @@ public class GAgent : MonoBehaviour
 
             foreach (KeyValuePair<SubGoal, int> sg in sortedGoals)
             {
-                actionQueue = planner.Plan(actions, sg.Key.sGoals, null);
+                actionQueue = planner.Plan(actions, sg.Key.sGoals, beliefs);
                 if (actionQueue != null)
                 {
                     currentGoal = sg.Key;

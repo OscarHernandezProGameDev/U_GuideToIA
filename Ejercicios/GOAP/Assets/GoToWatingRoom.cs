@@ -13,6 +13,7 @@ public class GoToWatingRoom : GAction
     {
         GWorld.Instance.GetWorld().ModifyState("Waiting", 1);
         GWorld.Instance.AddPatient(gameObject);
+        beliefs.ModifyState("atHospital", 1);
         return true;
     }
 }
