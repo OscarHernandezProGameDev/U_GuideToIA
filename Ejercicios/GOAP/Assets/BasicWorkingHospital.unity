@@ -1515,9 +1515,9 @@ MonoBehaviour:
   duration: 0
   preConditions:
   - key: Waiting
-    value: 0
+    value: 1
   - key: FreeCubicle
-    value: 0
+    value: 1
   afterEffects:
   - key: PatientPickedup
     value: 0
@@ -1555,7 +1555,7 @@ MonoBehaviour:
   targetTag: 
   duration: 0
   preConditions:
-  - key: PatientPickedup
+  - key: PatientPickedUp
     value: 0
   afterEffects:
   - key: treatPatient
@@ -4182,7 +4182,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   patientPrefab: {fileID: 7881807149238628900, guid: d36c43225f9391e4c8810c98eb7ef85e, type: 3}
-  numberOfPatients: 5
+  numberOfPatients: 1
 --- !u!1 &1896877307
 GameObject:
   m_ObjectHideFlags: 0

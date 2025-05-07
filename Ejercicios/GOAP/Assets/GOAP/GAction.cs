@@ -32,7 +32,7 @@ public abstract class GAction : MonoBehaviour
 
     public void Awake()
     {
-        agent = GetComponent<NavMeshAgent>();
+        agent = this.gameObject.GetComponent<NavMeshAgent>();
 
         if (preConditions != null)
         {

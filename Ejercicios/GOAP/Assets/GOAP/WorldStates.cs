@@ -30,7 +30,7 @@ public class WorldStates
 
     public void ModifyState(string key, int value)
     {
-        if (states.ContainsKey(key))
+        if (HasState(key))
         {
             states[key] += value;
             if (states[key] <= 0)
@@ -42,11 +42,11 @@ public class WorldStates
 
     public void RemoveState(string key)
     {
-        if (!states.ContainsKey(key))
+        if (HasState(key))
             states.Remove(key);
     }
 
-    public void SetState(string key, int value)
+    void SetState(string key, int value)
     {
         if (states.ContainsKey(key))
             states[key] = value;

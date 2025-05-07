@@ -27,6 +27,7 @@ public class GAgent : MonoBehaviour
     Queue<GAction> actionQueue;
     public GAction currentAction;
     SubGoal currentGoal;
+    bool invoked = false;
 
     // Start is called before the first frame update
     protected virtual void Start()
@@ -35,8 +36,6 @@ public class GAgent : MonoBehaviour
         foreach (GAction a in acts)
             actions.Add(a);
     }
-
-    bool invoked = false;
 
     void CompleteAction()
     {
