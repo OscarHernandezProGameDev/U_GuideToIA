@@ -17,6 +17,11 @@ public class Node
         this.name = n;
     }
 
+    public virtual Status Process()
+    {
+        return childrens[currentChild].Process();
+    }
+
     public void AddChild(Node n)
     {
         childrens.Add(n);
