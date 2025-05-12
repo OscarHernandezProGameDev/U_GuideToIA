@@ -44,7 +44,7 @@ public class GInventory {
             }
         }
         // Do we have something to remove?
-        if (indexToRemove >= 1) {
+        if (indexToRemove > -1) {
 
             // Yes we do.  So remove the item at indexToRemove
             items.RemoveAt(indexToRemove);

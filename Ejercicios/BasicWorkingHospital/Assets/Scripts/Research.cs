@@ -9,7 +9,7 @@ public class Research : GAction
             return false;
         inventory.AddItem(target);
         GWorld.Instance.GetWorld().ModifyState("FreeOffice", -1);
-        Debug.Log("Research Started");
+        //Debug.Log("Research Started");
         return true;
     }
 
@@ -18,7 +18,7 @@ public class Research : GAction
         GWorld.Instance.AddOffice(target);
         inventory.RemoveItem(target);
         GWorld.Instance.GetWorld().ModifyState("FreeOffice", 1);
-        Debug.Log("Research Finished");
+        //Debug.Log("Research Finished");
         return true;
     }
 }

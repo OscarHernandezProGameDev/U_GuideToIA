@@ -41,6 +41,8 @@ public class GAgent : MonoBehaviour
     // Our subgoal
     SubGoal currentGoal;
 
+    Vector3 destination = Vector3.zero;
+
     // Start is called before the first frame update
     protected virtual void Start()
     {
@@ -71,10 +73,11 @@ public class GAgent : MonoBehaviour
         if (currentAction != null && currentAction.running)
         {
             // Find the distance to the target
-            float distanceToTarget = Vector3.Distance(currentAction.target.transform.position, this.transform.position);
+            //float distanceToTarget = Vector3.Distance(currentAction.target.transform.position, this.transform.position);
+            float distanceToTarget = Vector3.Distance(destination, this.transform.position);
             // Check the agent has a goal and has reached that goal
-            Debug.Log($"currentAction.agent.hasPath: {currentAction.agent.hasPath} distanceToTarget: {distanceToTarget}");
-            if (currentAction.agent.hasPath && distanceToTarget < 2.0f)
+            //Debug.Log($"currentAction.agent.hasPath: {currentAction.agent.hasPath} distanceToTarget: {distanceToTarget}");
+            if (distanceToTarget < 2.0f)
             { // currentAction.agent.remainingDistance < 1.0f) 
 
                 if (!invoked)
@@ -153,7 +156,13 @@ public class GAgent : MonoBehaviour
                     // Activate the current action
                     currentAction.running = true;
                     // Pass Unities AI the destination for the agent
-                    currentAction.agent.SetDestination(currentAction.target.transform.position);
+                    //currentAction.agent.SetDestination(currentAction.target.transform.position);
+                    destination = currentAction.target.transform.position;
+                    Transform dest = currentAction.target.transform.Find("Destination");
+                    if (dest != null)
+                        destination = dest.position;
+
+                    currentAction.agent.SetDestination(destination);
                 }
             }
             else
