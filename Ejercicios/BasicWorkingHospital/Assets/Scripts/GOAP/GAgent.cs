@@ -39,7 +39,7 @@ public class GAgent : MonoBehaviour {
     SubGoal currentGoal;
 
     // Start is called before the first frame update
-    public void Start() {
+    protected virtual void Start() {
 
         GAction[] acts = this.GetComponents<GAction>();
         foreach (GAction a in acts) {

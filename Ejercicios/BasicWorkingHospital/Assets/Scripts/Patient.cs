@@ -1,6 +1,6 @@
 ﻿public class Patient : GAgent {
 
-    new void Start() {
+    protected override void Start() {
 
         // Call the base start
         base.Start();
