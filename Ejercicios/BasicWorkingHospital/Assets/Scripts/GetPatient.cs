@@ -1,29 +1,34 @@
 ﻿using UnityEngine;
 
-public class GetPatient : GAction {
+public class GetPatient : GAction
+{
 
     // Resource in this case = cubicle
     GameObject resource;
 
-    public override bool PrePerform() {
+    public override bool PrePerform()
+    {
 
         // Set our target patient and remove them from the Queue
-        target = GWorld.Instance.RemovePatient();
+        target = GWorld.Instance.GetQueue("patients").RemoveResource();
         // Check that we did indeed get a patient
         if (target == null)
             // No patient so return false
             return false;
         // Grab a free cubicle and remove it from the list
-        resource = GWorld.Instance.RemoveCubicle();
+        resource = GWorld.Instance.GetQueue("cubicles").RemoveResource();
         // Test did we get one?
-        if (resource != null) {
+        if (resource != null)
+        {
 
             // Yes we have a cubicle
             inventory.AddItem(resource);
-        } else {
+        }
+        else
+        {
 
             // No free cubicles so release the patient
-            GWorld.Instance.AddPatient(target);
+            GWorld.Instance.GetQueue("patients").AddResource(target);
             target = null;
             return false;
         }
@@ -33,11 +38,13 @@ public class GetPatient : GAction {
         return true;
     }
 
-    public override bool PostPerform() {
+    public override bool PostPerform()
+    {
 
         // Remove a patient from the world
         GWorld.Instance.GetWorld().ModifyState("Waiting", -1);
-        if (target) {
+        if (target)
+        {
 
             target.GetComponent<GAgent>().inventory.AddItem(resource);
         }

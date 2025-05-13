@@ -1,151 +1,84 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
+public class ResourceQueue
+{
+    private Queue<GameObject> queue;
+    public string tag;
+    public string modSate;
+
+    public ResourceQueue(string t, string ms, WorldStates w)
+    {
+        tag = t;
+        modSate = ms;
+        queue= new Queue<GameObject>();
+
+        if (tag != "")
+        {
+            GameObject[] resources = GameObject.FindGameObjectsWithTag(tag);
+
+            foreach (GameObject r in resources)
+            {
+                queue.Enqueue(r);
+            }
+        }
+        if (modSate != "")
+            w.ModifyState(modSate, queue.Count);
+    }
+
+    public void AddResource(GameObject r)
+    {
+        queue.Enqueue(r);
+    }
+
+    public GameObject RemoveResource()
+    {
+        if (queue.Count == 0) return null;
+        return queue.Dequeue();
+    }
+}
+
 public sealed class GWorld
 {
-
     // Our GWorld instance
     private static readonly GWorld instance = new GWorld();
     // Our world states
     private static WorldStates world;
     // Queue of patients
-    private static Queue<GameObject> patients;
+    private static ResourceQueue patients;
     // Queue of cubicles
-    private static Queue<GameObject> cubicles;
+    private static ResourceQueue cubicles;
     // Queue of offices
-    private static Queue<GameObject> offices;
-    private static Queue<GameObject> toilets;
-
+    private static ResourceQueue offices;
+    private static ResourceQueue toilets;
+    private static Dictionary<string, ResourceQueue> resources = new Dictionary<string, ResourceQueue>();
     static GWorld()
     {
 
         // Create our world
         world = new WorldStates();
         // Create patients array
-        patients = new Queue<GameObject>();
+        patients = new ResourceQueue("", "", world);
+        resources.Add("patients", patients);
         // Create cubicles array
-        cubicles = new Queue<GameObject>();
+        cubicles = new ResourceQueue("Cubicle", "FreeCubicle", world);
+        resources.Add("cubicles", cubicles);
         // Create offices array
-        offices = new Queue<GameObject>();
+        offices = new ResourceQueue("Office", "FreeOffice", world);
+        resources.Add("offices", offices);
         // Create toilets array
-        toilets = new Queue<GameObject>();
-
-        // Find all GameObjects that are tagged "Cubicle"
-        GameObject[] cubes = GameObject.FindGameObjectsWithTag("Cubicle");
-        // Then add them to the cubicles Queue
-        foreach (GameObject c in cubes)
-        {
-            cubicles.Enqueue(c);
-        }
-
-        // Inform the state
-        if (cubes.Length > 0)
-        {
-            world.ModifyState("FreeCubicle", cubes.Length);
-        }
-
-        // Find all GameObjects that are tagged "Office"
-        GameObject[] offs = GameObject.FindGameObjectsWithTag("Office");
-        // Then add them to the offices Queue
-        foreach (GameObject o in offs)
-        {
-            offices.Enqueue(o);
-        }
-
-        // Inform the state
-        if (offs.Length > 0)
-        {
-            world.ModifyState("FreeOffice", offs.Length);
-        }
-
-        // Find all GameObjects that are tagged "Toilet"
-        GameObject[] tois = GameObject.FindGameObjectsWithTag("Toilet");
-        // Then add them to the offices Queue
-        foreach (GameObject t in tois)
-        {
-            toilets.Enqueue(t);
-        }
-
-        // Inform the state
-        if (tois.Length > 0)
-        {
-            world.ModifyState("FreeToilet", tois.Length);
-        }
+        toilets = new ResourceQueue("Toilet", "FreeToilet", world);
+        resources.Add("toilets", toilets);
 
         // Set the time scale in Unity
         Time.timeScale = 5.0f;
     }
 
-    private GWorld()
+    private GWorld()    {    }
+
+    public ResourceQueue GetQueue(string r)
     {
-
-    }
-
-    // Add patient
-    public void AddPatient(GameObject p)
-    {
-
-        // Add the patient to the patients Queue
-        patients.Enqueue(p);
-    }
-
-    // Remove patient
-    public GameObject RemovePatient()
-    {
-
-        if (patients.Count == 0) return null;
-        return patients.Dequeue();
-    }
-
-    // Add cubicle
-    public void AddCubicle(GameObject p)
-    {
-
-        // Add the patient to the patients Queue
-        cubicles.Enqueue(p);
-    }
-
-    // Remove cubicle
-    public GameObject RemoveCubicle()
-    {
-
-        // Check we have something to remove
-        if (cubicles.Count == 0) return null;
-        return cubicles.Dequeue();
-    }
-
-    // Add office
-    public void AddOffice(GameObject p)
-    {
-
-        // Add the patient to the patients Queue
-        offices.Enqueue(p);
-    }
-
-    // Remove office
-    public GameObject RemoveOffice()
-    {
-
-        // Check we have something to remove
-        if (offices.Count == 0) return null;
-        return offices.Dequeue();
-    }
-
-    // Add toilet
-    public void AddToilet(GameObject p)
-    {
-
-        // Add the patient to the patients Queue
-        toilets.Enqueue(p);
-    }
-
-    // Remove toilet
-    public GameObject RemoveToilet()
-    {
-
-        // Check we have something to remove
-        if (toilets.Count == 0) return null;
-        return toilets.Dequeue();
+        return resources[r];
     }
 
     public static GWorld Instance

@@ -17,7 +17,7 @@
         // Add a new state "TreatingPatient"
         GWorld.Instance.GetWorld().ModifyState("TreatingPatient", 1);
         // Give back the cubicle
-        GWorld.Instance.AddCubicle(target);
+        GWorld.Instance.GetQueue("cubicles").AddResource(target);
         // Remove the cubicle from the list
         inventory.RemoveItem(target);
         // Give the cubicle back to the world

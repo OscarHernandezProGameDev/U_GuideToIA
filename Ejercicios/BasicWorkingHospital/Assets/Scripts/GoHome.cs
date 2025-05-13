@@ -10,7 +10,7 @@
     public override bool PostPerform()
     {
 
-        //Destroy(this.gameObject);
+        Destroy(this.gameObject, 1);
         return true;
     }
 }
