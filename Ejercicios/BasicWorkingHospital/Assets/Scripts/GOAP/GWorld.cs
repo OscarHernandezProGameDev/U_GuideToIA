@@ -14,6 +14,7 @@ public sealed class GWorld
     private static Queue<GameObject> cubicles;
     // Queue of offices
     private static Queue<GameObject> offices;
+    private static Queue<GameObject> toilets;
 
     static GWorld()
     {
@@ -26,6 +27,8 @@ public sealed class GWorld
         cubicles = new Queue<GameObject>();
         // Create offices array
         offices = new Queue<GameObject>();
+        // Create toilets array
+        toilets = new Queue<GameObject>();
 
         // Find all GameObjects that are tagged "Cubicle"
         GameObject[] cubes = GameObject.FindGameObjectsWithTag("Cubicle");
@@ -53,6 +56,20 @@ public sealed class GWorld
         if (offs.Length > 0)
         {
             world.ModifyState("FreeOffice", offs.Length);
+        }
+
+        // Find all GameObjects that are tagged "Toilet"
+        GameObject[] tois = GameObject.FindGameObjectsWithTag("Toilet");
+        // Then add them to the offices Queue
+        foreach (GameObject t in tois)
+        {
+            toilets.Enqueue(t);
+        }
+
+        // Inform the state
+        if (tois.Length > 0)
+        {
+            world.ModifyState("FreeToilet", tois.Length);
         }
 
         // Set the time scale in Unity
@@ -112,6 +129,23 @@ public sealed class GWorld
         // Check we have something to remove
         if (offices.Count == 0) return null;
         return offices.Dequeue();
+    }
+
+    // Add toilet
+    public void AddToilet(GameObject p)
+    {
+
+        // Add the patient to the patients Queue
+        toilets.Enqueue(p);
+    }
+
+    // Remove toilet
+    public GameObject RemoveToilet()
+    {
+
+        // Check we have something to remove
+        if (toilets.Count == 0) return null;
+        return toilets.Dequeue();
     }
 
     public static GWorld Instance
