@@ -1,24 +1,30 @@
 ﻿using UnityEngine;
 
-public class Spawn : MonoBehaviour {
+public class Spawn : MonoBehaviour
+{
 
     // Grab our prefab
     public GameObject patientPrefab;
     // Number of patients to spawn
     public int numPatients;
+    public bool keepSpawning = true;
 
-    void Start() {
+    void Start()
+    {
 
-        //for (int i = 0; i < numPatients; ++i) {
+        for (int i = 0; i < numPatients; ++i)
+        {
 
-        //    // Instantiate numPatients at the spawner
-        //    Instantiate(patientPrefab, this.transform.position, Quaternion.identity);
-        //}
+            // Instantiate numPatients at the spawner
+            Instantiate(patientPrefab, this.transform.position, Quaternion.identity);
+        }
         // Call the SpawnPatient method for the first time
-        Invoke("SpawnPatient", 5.0f);
+        if (keepSpawning)
+            Invoke("SpawnPatient", 5.0f);
     }
 
-    void SpawnPatient() {
+    void SpawnPatient()
+    {
 
         // Instantiate numPatients at the spawner
         Instantiate(patientPrefab, this.transform.position, Quaternion.identity);
@@ -27,7 +33,8 @@ public class Spawn : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update() {
+    void Update()
+    {
 
     }
 }

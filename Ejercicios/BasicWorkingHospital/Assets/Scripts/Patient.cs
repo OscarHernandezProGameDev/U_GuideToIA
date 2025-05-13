@@ -1,6 +1,9 @@
-﻿public class Patient : GAgent {
+﻿using UnityEngine;
 
-    protected override void Start() {
+public class Patient : GAgent
+{
+    protected override void Start()
+    {
 
         // Call the base start
         base.Start();
@@ -18,6 +21,21 @@
         SubGoal s3 = new SubGoal("isHome", 1, true);
         // Add it to the goals
         goals.Add(s3, 1);
+
+        // Refief goal
+        SubGoal s4 = new SubGoal("refief", 1, false);
+        goals.Add(s4, 2);
+
+        // Call the NeedRefief() method for the first time
+        Invoke("NeedRefief", Random.Range(2, 5));
     }
 
+    void NeedRefief()
+    {
+
+        beliefs.ModifyState("busting", 0);
+        //call the get tired method over and over at random times to make the nurse
+        //get tired again
+        Invoke("NeedRefief", Random.Range(2, 5));
+    }
 }

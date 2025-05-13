@@ -14,8 +14,15 @@ public class Nurse : GAgent {
         SubGoal s2 = new SubGoal("rested", 1, false);
         goals.Add(s2, 1);
 
+        // Refief goal
+        SubGoal s3 = new SubGoal("refief", 1, false);
+        goals.Add(s3, 2);
+
         // Call the GetTired() method for the first time
         Invoke("GetTired", Random.Range(10.0f, 20.0f));
+
+        // Call the NeedRefief() method for the first time
+        Invoke("NeedRefief", Random.Range(2, 5));
     }
 
     void GetTired() {
@@ -26,4 +33,12 @@ public class Nurse : GAgent {
         Invoke("GetTired", Random.Range(0.0f, 20.0f));
     }
 
+    void NeedRefief()
+    {
+
+        beliefs.ModifyState("busting", 0);
+        //call the get tired method over and over at random times to make the nurse
+        //get tired again
+        Invoke("NeedRefief", Random.Range(2, 5));
+    }
 }
