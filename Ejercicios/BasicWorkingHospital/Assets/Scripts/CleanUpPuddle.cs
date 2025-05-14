@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class CleanUpPuddle : GAction
 {
-    public override bool PostPerform()
+    public override bool PrePerform()
     {
         target = GWorld.Instance.GetQueue("puddles").RemoveResource();
         if (target == null)
@@ -14,11 +14,10 @@ public class CleanUpPuddle : GAction
         return true;
     }
 
-    public override bool PrePerform()
+    public override bool PostPerform()
     {
         inventory.RemoveItem(target);
         Destroy(target);
-        beliefs.RemoveState("clean");
         return true;
     }
 }
