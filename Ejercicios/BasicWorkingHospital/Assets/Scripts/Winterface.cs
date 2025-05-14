@@ -1,8 +1,13 @@
+using Unity.AI.Navigation;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Winterface : MonoBehaviour
 {
     public GameObject newResourcePrefab;
+    public GameObject hospital;
+    public NavMeshSurface surface;
+
     GameObject focusObj;
     Vector3 goalPos;
 
@@ -25,6 +30,14 @@ public class Winterface : MonoBehaviour
             goalPos = hit.point;
 
             focusObj = Instantiate(newResourcePrefab, goalPos, newResourcePrefab.transform.rotation);
+        }
+        else if (focusObj && Input.GetMouseButtonUp(0))
+        {
+            focusObj.transform.parent = hospital.transform;
+            surface.BuildNavMesh();
+            GWorld.Instance.GetQueue("toilets").AddResource(focusObj);
+            GWorld.Instance.GetWorld().ModifyState("FreeToilet", 1);
+            focusObj = null;
         }
         else if (focusObj && Input.GetMouseButton(0))
         {
