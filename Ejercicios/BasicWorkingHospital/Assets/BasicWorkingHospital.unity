@@ -214,7 +214,16 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8605689669571939968, guid: 48824e5942afc4b5ea86751dcde7ad1a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1663149862}
+    - targetCorrespondingSourceObject: {fileID: 8605689669571939968, guid: 48824e5942afc4b5ea86751dcde7ad1a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1663149861}
+    - targetCorrespondingSourceObject: {fileID: 8605689669571939968, guid: 48824e5942afc4b5ea86751dcde7ad1a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1663149863}
   m_SourcePrefab: {fileID: 100100000, guid: 48824e5942afc4b5ea86751dcde7ad1a, type: 3}
 --- !u!1 &34730032
 GameObject:
@@ -7844,6 +7853,63 @@ MonoBehaviour:
   m_IgnoreFromBuild: 0
   m_ApplyToChildren: 1
   m_AffectedAgents: ffffffff
+--- !u!1 &1663149858 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8605689669571939968, guid: 48824e5942afc4b5ea86751dcde7ad1a, type: 3}
+  m_PrefabInstance: {fileID: 29323473}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1663149861
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1663149858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11a22f7cad6d08b4babaded779dbc7bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionName: Clean Up Puddle
+  cost: 1
+  target: {fileID: 0}
+  targetTag: 
+  duration: 5
+  preConditions:
+  - key: FreePuddle
+    value: 0
+  afterEffects:
+  - key: clean
+    value: 0
+  agent: {fileID: 0}
+  running: 0
+--- !u!114 &1663149862
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1663149858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83b967e5a50cf8b4aaa9d36032ed77b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actions: []
+  currentAction: {fileID: 0}
+--- !u!114 &1663149863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1663149858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ce8d09e5c4f8684db3c65508231a11d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  thisAgent: {fileID: 1663149862}
 --- !u!114 &1667010047
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10016,6 +10082,6 @@ SceneRoots:
   - {fileID: 3849384403827631809}
   - {fileID: 752571389}
   - {fileID: 826546654}
+  - {fileID: 29323473}
   - {fileID: 57766220}
   - {fileID: 1210826811}
-  - {fileID: 29323473}
