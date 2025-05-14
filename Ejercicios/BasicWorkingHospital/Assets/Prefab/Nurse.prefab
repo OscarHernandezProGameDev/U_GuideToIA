@@ -1083,9 +1083,10 @@ GameObject:
   - component: {fileID: 1618912316}
   - component: {fileID: 1618912317}
   - component: {fileID: 1618912318}
-  - component: {fileID: 1618912320}
   - component: {fileID: 8454386370049771602}
   - component: {fileID: 4399959475315380667}
+  - component: {fileID: 7218142415759371133}
+  - component: {fileID: 1618912320}
   m_Layer: 0
   m_Name: Nurse
   m_TagString: Untagged
@@ -1197,19 +1198,6 @@ MonoBehaviour:
     value: 0
   agent: {fileID: 0}
   running: 0
---- !u!114 &1618912320
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2618188073631541129}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ce8d09e5c4f8684db3c65508231a11d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  thisAgent: {fileID: 1618912317}
 --- !u!114 &8454386370049771602
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1262,6 +1250,38 @@ MonoBehaviour:
     value: 0
   agent: {fileID: 0}
   running: 0
+--- !u!114 &7218142415759371133
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2618188073631541129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00e6d63db5c50704c8d2e826dfbb6f7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  state: busting
+  stateStrength: 10
+  stateDecayRate: 2
+  resourcePrefab: {fileID: 1625109968861542130, guid: 2f67e1b06640349c7a33a29963d525ff, type: 3}
+  queueName: puddles
+  worldState: FreePuddle
+  action: {fileID: 4399959475315380667}
+--- !u!114 &1618912320
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2618188073631541129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ce8d09e5c4f8684db3c65508231a11d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  thisAgent: {fileID: 1618912317}
 --- !u!1 &2629889911763255196
 GameObject:
   m_ObjectHideFlags: 0

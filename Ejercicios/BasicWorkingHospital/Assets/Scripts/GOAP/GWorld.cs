@@ -51,6 +51,7 @@ public sealed class GWorld
     // Queue of offices
     private static ResourceQueue offices;
     private static ResourceQueue toilets;
+    private static ResourceQueue puddles;
     private static Dictionary<string, ResourceQueue> resources = new Dictionary<string, ResourceQueue>();
     static GWorld()
     {
@@ -69,6 +70,10 @@ public sealed class GWorld
         // Create toilets array
         toilets = new ResourceQueue("Toilet", "FreeToilet", world);
         resources.Add("toilets", toilets);
+
+        // Create puddles array
+        puddles = new ResourceQueue("Puddle", "FreePuddle", world);
+        resources.Add("puddles", puddles);
 
         // Set the time scale in Unity
         Time.timeScale = 5.0f;
