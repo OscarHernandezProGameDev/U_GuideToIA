@@ -1,13 +1,14 @@
 using Unity.AI.Navigation;
 using UnityEngine;
-using UnityEngine.AI;
+using UnityEngine.EventSystems;
 
 public class Winterface : MonoBehaviour
 {
-    public GameObject newResourcePrefab;
+    public GameObject[] allResources;
     public GameObject hospital;
     public NavMeshSurface surface;
 
+    GameObject newResourcePrefab;
     GameObject focusObj;
     ResourceData foData;
     Vector3 goalPos;
@@ -25,6 +26,16 @@ public class Winterface : MonoBehaviour
         deleteResource = false;
     }
 
+    public void ActivateToilet()
+    {
+        newResourcePrefab = allResources[0];
+    }
+
+    public void ActivateCubicle()
+    {
+        newResourcePrefab = allResources[1];
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -36,6 +47,9 @@ public class Winterface : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
+            if (EventSystem.current.IsPointerOverGameObject())
+                return;
+
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (!Physics.Raycast(ray, out hit))
@@ -51,14 +65,16 @@ public class Winterface : MonoBehaviour
                 focusObj = hit.transform.gameObject;
                 foData = r.info;
             }
-            else
+            else if (newResourcePrefab != null)
             {
                 goalPos = hit.point;
 
                 focusObj = Instantiate(newResourcePrefab, goalPos, newResourcePrefab.transform.rotation);
+                foData = focusObj.GetComponent<Resource>().info;
             }
 
-            focusObj.GetComponent<Collider>().enabled = false;
+            if (focusObj)
+                focusObj.GetComponent<Collider>().enabled = false;
         }
         else if (focusObj && Input.GetMouseButtonUp(0))
         {
