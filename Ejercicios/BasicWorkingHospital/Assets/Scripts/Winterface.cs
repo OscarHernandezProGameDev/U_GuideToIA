@@ -9,6 +9,7 @@ public class Winterface : MonoBehaviour
     public NavMeshSurface surface;
 
     GameObject focusObj;
+    ResourceData foData;
     Vector3 goalPos;
     Vector3 clickOffset = Vector3.zero;
     bool offsetCalc = false;
@@ -43,8 +44,13 @@ public class Winterface : MonoBehaviour
             offsetCalc = false;
             clickOffset = Vector3.zero;
 
-            if (hit.transform.tag == "Toilet")
+            Resource r = hit.transform.GetComponent<Resource>();
+
+            if (r != null)
+            {
                 focusObj = hit.transform.gameObject;
+                foData = r.info;
+            }
             else
             {
                 goalPos = hit.point;
@@ -58,16 +64,16 @@ public class Winterface : MonoBehaviour
         {
             if (deleteResource)
             {
-                GWorld.Instance.GetQueue("toilets").RemoveResource(focusObj);
-                GWorld.Instance.GetWorld().ModifyState("FreeToilet", -1);
+                GWorld.Instance.GetQueue(foData.resourceQueue).RemoveResource(focusObj);
+                GWorld.Instance.GetWorld().ModifyState(foData.resourceState, -1);
                 Destroy(focusObj);
             }
             else
             {
                 focusObj.transform.parent = hospital.transform;
 
-                GWorld.Instance.GetQueue("toilets").AddResource(focusObj);
-                GWorld.Instance.GetWorld().ModifyState("FreeToilet", 1);
+                GWorld.Instance.GetQueue(foData.resourceQueue).AddResource(focusObj);
+                GWorld.Instance.GetWorld().ModifyState(foData.resourceState, 1);
 
                 focusObj.GetComponent<Collider>().enabled = true;
             }
