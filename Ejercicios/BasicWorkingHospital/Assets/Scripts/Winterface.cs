@@ -12,6 +12,17 @@ public class Winterface : MonoBehaviour
     Vector3 goalPos;
     Vector3 clickOffset = Vector3.zero;
     bool offsetCalc = false;
+    bool deleteResource = false;
+
+    public void MouseOnHoverTrash()
+    {
+        deleteResource = true;
+    }
+
+    public void MouseOutHoverTrash()
+    {
+        deleteResource = false;
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -45,13 +56,23 @@ public class Winterface : MonoBehaviour
         }
         else if (focusObj && Input.GetMouseButtonUp(0))
         {
-            focusObj.transform.parent = hospital.transform;
+            if (deleteResource)
+            {
+                GWorld.Instance.GetQueue("toilets").RemoveResource(focusObj);
+                GWorld.Instance.GetWorld().ModifyState("FreeToilet", -1);
+                Destroy(focusObj);
+            }
+            else
+            {
+                focusObj.transform.parent = hospital.transform;
+
+                GWorld.Instance.GetQueue("toilets").AddResource(focusObj);
+                GWorld.Instance.GetWorld().ModifyState("FreeToilet", 1);
+
+                focusObj.GetComponent<Collider>().enabled = true;
+            }
+
             surface.BuildNavMesh();
-
-            GWorld.Instance.GetQueue("toilets").AddResource(focusObj);
-            GWorld.Instance.GetWorld().ModifyState("FreeToilet", 1);
-
-            focusObj.GetComponent<Collider>().enabled = true;
 
             focusObj = null;
         }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ResourceQueue
@@ -11,7 +12,7 @@ public class ResourceQueue
     {
         tag = t;
         modSate = ms;
-        queue= new Queue<GameObject>();
+        queue = new Queue<GameObject>();
 
         if (tag != "")
         {
@@ -29,6 +30,11 @@ public class ResourceQueue
     public void AddResource(GameObject r)
     {
         queue.Enqueue(r);
+    }
+
+    public void RemoveResource(GameObject r)
+    {
+        queue = new Queue<GameObject>(queue.Where(p => p != r));
     }
 
     public GameObject RemoveResource()
@@ -79,7 +85,7 @@ public sealed class GWorld
         Time.timeScale = 5.0f;
     }
 
-    private GWorld()    {    }
+    private GWorld() { }
 
     public ResourceQueue GetQueue(string r)
     {
