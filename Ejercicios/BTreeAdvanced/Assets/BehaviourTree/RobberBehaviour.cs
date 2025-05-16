@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class RobberBehaviour : BTAgent
 {
     public GameObject diamond;
+    public GameObject painting;
     public GameObject van;
     public GameObject backdoor;
     public GameObject frontdoor;
@@ -18,11 +20,13 @@ public class RobberBehaviour : BTAgent
         base.Start();
         Sequence steal = new Sequence("Steal Something");
         Leaf goToDiamond = new Leaf("Go To Diamond", GoToDiamond);
+        Leaf goToPainting = new Leaf("Go To Painting", GoToPainting);
         Leaf hasGotMoney = new Leaf("Has Got Money", HasMoney);
         Leaf goToBackDoor = new Leaf("Go To Backdoor", GoToBackDoor);
         Leaf goToFrontDoor = new Leaf("Go To Frontdoor", GoToFrontDoor);
         Leaf goToVan = new Leaf("Go To Van", GoToVan);
         Selector opendoor = new Selector("Open Door");
+        Selector selectObject = new Selector("Select Object To Steal");
 
         Inverter inverterMoney = new Inverter("Has Money");
         inverterMoney.AddChild(hasGotMoney);
@@ -32,7 +36,12 @@ public class RobberBehaviour : BTAgent
 
         steal.AddChild(inverterMoney);
         steal.AddChild(opendoor);
-        steal.AddChild(goToDiamond);
+
+        selectObject.AddChild(goToDiamond);
+        selectObject.AddChild(goToPainting);
+
+        steal.AddChild(selectObject);
+
         //steal.AddChild(goToBackDoor);
         steal.AddChild(goToVan);
         tree.AddChild(steal);
@@ -54,6 +63,16 @@ public class RobberBehaviour : BTAgent
         if (s == Node.Status.SUCCESS)
         {
             diamond.transform.parent = this.gameObject.transform;
+        }
+        return s;
+    }
+
+    public Node.Status GoToPainting()
+    {
+        Node.Status s = GoToLocation(painting.transform.position);
+        if (s == Node.Status.SUCCESS)
+        {
+            painting.transform.parent = this.gameObject.transform;
         }
         return s;
     }
@@ -86,7 +105,7 @@ public class RobberBehaviour : BTAgent
         {
             if (!door.GetComponent<Lock>().isLocked)
             {
-                door.SetActive(false);
+                door.GetComponent<NavMeshObstacle>().enabled = false;
                 return Node.Status.SUCCESS;
             }
             return Node.Status.FAILURE;

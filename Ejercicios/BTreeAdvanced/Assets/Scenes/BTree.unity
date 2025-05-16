@@ -2348,6 +2348,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   diamond: {fileID: 1550492363}
+  painting: {fileID: 1904932022}
   van: {fileID: 1086641422}
   backdoor: {fileID: 919599686}
   frontdoor: {fileID: 1791870521}
