@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -10,19 +11,25 @@ public class BTAgent : MonoBehaviour
     protected ActionState state = ActionState.IDLE;
     protected Node.Status treeStatus = Node.Status.RUNNING;
 
+    WaitForSeconds waitForSeconds;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     protected virtual void Start()
     {
         agent = this.GetComponent<NavMeshAgent>();
 
         tree = new BehaviourTree();
+        waitForSeconds = new WaitForSeconds(Random.Range(0.1f, 1f));
+        StartCoroutine(Behave());
     }
 
-    // Update is called once per frame
-    protected virtual void Update()
+    IEnumerator Behave()
     {
-        if (treeStatus != Node.Status.SUCCESS)
-            treeStatus = tree.Process();
+        while (true)
+        {
+            tree.Process();
+            yield return waitForSeconds;
+        }
     }
 
     protected Node.Status GoToLocation(Vector3 destination)
