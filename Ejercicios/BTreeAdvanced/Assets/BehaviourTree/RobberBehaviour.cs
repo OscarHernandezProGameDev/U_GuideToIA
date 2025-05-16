@@ -15,6 +15,8 @@ public class RobberBehaviour : BTAgent
     public int money = 800;
 
     GameObject pickup;
+    Leaf goToBackDoor;
+    Leaf goToFrontDoor;
 
     // Start is called before the first frame update
     protected override void Start()
@@ -24,10 +26,10 @@ public class RobberBehaviour : BTAgent
         Leaf goToDiamond = new Leaf("Go To Diamond", GoToDiamond, 1);
         Leaf goToPainting = new Leaf("Go To Painting", GoToPainting, 2);
         Leaf hasGotMoney = new Leaf("Has Got Money", HasMoney);
-        Leaf goToBackDoor = new Leaf("Go To Backdoor", GoToBackDoor);
-        Leaf goToFrontDoor = new Leaf("Go To Frontdoor", GoToFrontDoor);
+        goToBackDoor = new Leaf("Go To Backdoor", GoToBackDoor, 2);
+        goToFrontDoor = new Leaf("Go To Frontdoor", GoToFrontDoor, 1);
         Leaf goToVan = new Leaf("Go To Van", GoToVan);
-        Selector opendoor = new Selector("Open Door");
+        PSelector opendoor = new PSelector("Open Door");
         PSelector selectObject = new PSelector("Select Object To Steal");
 
         Inverter inverterMoney = new Inverter("Has Money");
@@ -89,12 +91,26 @@ public class RobberBehaviour : BTAgent
 
     public Node.Status GoToBackDoor()
     {
-        return GoToDoor(backdoor);
+        Node.Status s = GoToDoor(backdoor);
+
+        if (s == Node.Status.FAILURE)
+            goToBackDoor.sortOrder = 10;
+        else
+            goToBackDoor.sortOrder = 1;
+
+        return s;
     }
 
     public Node.Status GoToFrontDoor()
     {
-        return GoToDoor(frontdoor);
+        Node.Status s = GoToDoor(frontdoor);
+
+        if (s == Node.Status.FAILURE)
+            goToFrontDoor.sortOrder = 10;
+        else
+            goToFrontDoor.sortOrder = 1;
+
+        return s;
     }
 
     public Node.Status GoToVan()

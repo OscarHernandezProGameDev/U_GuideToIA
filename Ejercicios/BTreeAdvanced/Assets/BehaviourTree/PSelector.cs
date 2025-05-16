@@ -19,10 +19,14 @@ public class PSelector : Node
 
         if (childstatus == Status.SUCCESS)
         {
+            // ponemos el nodo a prioridad uno porque ha sido exitoso
+            //children[currentChild].sortOrder = 1;
             currentChild = 0;
             return Status.SUCCESS;
         }
 
+        // si falla le ponemos menos prioridad (prioridad 10)
+        //children[currentChild].sortOrder = 10;
         currentChild++;
         if (currentChild >= children.Count)
         {
