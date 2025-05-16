@@ -1113,6 +1113,9 @@ MonoBehaviour:
   - {fileID: 5874423910086712904, guid: 1b134b1c5bdecf14e936ab0619fcf833, type: 3}
   hospital: {fileID: 742992259}
   surface: {fileID: 742992261}
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!4 &242183385
 Transform:
   m_ObjectHideFlags: 0
@@ -7495,7 +7498,7 @@ GameObject:
   - component: {fileID: 1521413601}
   - component: {fileID: 1521413600}
   - component: {fileID: 1521413604}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}

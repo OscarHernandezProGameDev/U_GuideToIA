@@ -7,6 +7,7 @@ public class Winterface : MonoBehaviour
     public GameObject[] allResources;
     public GameObject hospital;
     public NavMeshSurface surface;
+    public LayerMask layerMask;
 
     GameObject newResourcePrefab;
     GameObject focusObj;
@@ -102,7 +103,7 @@ public class Winterface : MonoBehaviour
         {
             RaycastHit hitMove;
             Ray rayMove = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (!Physics.Raycast(rayMove, out hitMove))
+            if (!Physics.Raycast(rayMove, out hitMove, Mathf.Infinity, layerMask))
                 return;
 
             if (!offsetCalc)
