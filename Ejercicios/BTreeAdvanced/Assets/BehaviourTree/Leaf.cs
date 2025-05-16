@@ -15,9 +15,16 @@ public class Leaf : Node
         ProcessMethod = pm;
     }
 
+    public Leaf(string n, Tick pm, int order)
+    {
+        name = n;
+        ProcessMethod = pm;
+        this.sortOrder = order;
+    }
+
     public override Status Process()
     {
-        if(ProcessMethod != null)
+        if (ProcessMethod != null)
             return ProcessMethod();
         return Status.FAILURE;
     }

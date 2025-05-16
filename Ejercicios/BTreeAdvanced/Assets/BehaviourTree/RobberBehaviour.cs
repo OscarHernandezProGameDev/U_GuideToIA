@@ -21,14 +21,14 @@ public class RobberBehaviour : BTAgent
     {
         base.Start();
         Sequence steal = new Sequence("Steal Something");
-        Leaf goToDiamond = new Leaf("Go To Diamond", GoToDiamond);
-        Leaf goToPainting = new Leaf("Go To Painting", GoToPainting);
+        Leaf goToDiamond = new Leaf("Go To Diamond", GoToDiamond, 1);
+        Leaf goToPainting = new Leaf("Go To Painting", GoToPainting, 2);
         Leaf hasGotMoney = new Leaf("Has Got Money", HasMoney);
         Leaf goToBackDoor = new Leaf("Go To Backdoor", GoToBackDoor);
         Leaf goToFrontDoor = new Leaf("Go To Frontdoor", GoToFrontDoor);
         Leaf goToVan = new Leaf("Go To Van", GoToVan);
         Selector opendoor = new Selector("Open Door");
-        Selector selectObject = new Selector("Select Object To Steal");
+        PSelector selectObject = new PSelector("Select Object To Steal");
 
         Inverter inverterMoney = new Inverter("Has Money");
         inverterMoney.AddChild(hasGotMoney);
