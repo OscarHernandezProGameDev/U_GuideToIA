@@ -34,10 +34,13 @@ public class RobberBehaviour : MonoBehaviour
         Leaf goToVan = new Leaf("Go To Van", GoToVan);
         Selector opendoor = new Selector("Open Door");
 
+        Inverter inverterMoney = new Inverter("Has Money");
+        inverterMoney.AddChild(hasGotMoney);
+
         opendoor.AddChild(goToFrontDoor);
         opendoor.AddChild(goToBackDoor);
 
-        steal.AddChild(hasGotMoney);
+        steal.AddChild(inverterMoney);
         steal.AddChild(opendoor);
         steal.AddChild(goToDiamond);
         //steal.AddChild(goToBackDoor);
@@ -50,7 +53,7 @@ public class RobberBehaviour : MonoBehaviour
 
     public Node.Status HasMoney()
     {
-        if(money >= 500)
+        if (money < 500)
             return Node.Status.FAILURE;
         return Node.Status.SUCCESS;
     }
@@ -126,7 +129,7 @@ public class RobberBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(treeStatus != Node.Status.SUCCESS)
+        if (treeStatus != Node.Status.SUCCESS)
             treeStatus = tree.Process();
     }
 }
