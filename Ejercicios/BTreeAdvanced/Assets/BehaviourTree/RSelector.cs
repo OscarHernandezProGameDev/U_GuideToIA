@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class RSelector : Node
 {
+    bool shuffled = false;
+
     public RSelector(string n)
     {
         name = n;
@@ -9,13 +11,18 @@ public class RSelector : Node
 
     public override Status Process()
     {
-        children.Shuffle();
+        if (!shuffled)
+        {
+            children.Shuffle();
+            shuffled = true;
+        }
         Status childstatus = children[currentChild].Process();
         if (childstatus == Status.RUNNING) return Status.RUNNING;
 
         if (childstatus == Status.SUCCESS)
         {
             currentChild = 0;
+            shuffled = false;
             return Status.SUCCESS;
         }
 
@@ -23,6 +30,7 @@ public class RSelector : Node
         if (currentChild >= children.Count)
         {
             currentChild = 0;
+            shuffled = false;
             return Status.FAILURE;
         }
 

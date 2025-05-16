@@ -4,6 +4,7 @@ using UnityEngine;
 public class PSelector : Node
 {
     Node[] nodeArray;
+    bool ordered = false;
 
     public PSelector(string n)
     {
@@ -12,7 +13,11 @@ public class PSelector : Node
 
     public override Status Process()
     {
-        SortNodes();
+        if (!ordered)
+        {
+            SortNodes();
+            ordered = true;
+        }
 
         Status childstatus = children[currentChild].Process();
         if (childstatus == Status.RUNNING) return Status.RUNNING;
@@ -22,6 +27,7 @@ public class PSelector : Node
             // ponemos el nodo a prioridad uno porque ha sido exitoso
             //children[currentChild].sortOrder = 1;
             currentChild = 0;
+            ordered = false;
             return Status.SUCCESS;
         }
 
@@ -31,6 +37,7 @@ public class PSelector : Node
         if (currentChild >= children.Count)
         {
             currentChild = 0;
+            ordered = false;
             return Status.FAILURE;
         }
 
