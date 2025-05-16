@@ -14,6 +14,8 @@ public class RobberBehaviour : BTAgent
     [Range(0, 1000)]
     public int money = 800;
 
+    GameObject pickup;
+
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -59,20 +61,28 @@ public class RobberBehaviour : BTAgent
 
     public Node.Status GoToDiamond()
     {
+        if (!diamond.activeSelf)
+            return Node.Status.FAILURE;
+
         Node.Status s = GoToLocation(diamond.transform.position);
         if (s == Node.Status.SUCCESS)
         {
             diamond.transform.parent = this.gameObject.transform;
+            pickup = diamond;
         }
         return s;
     }
 
     public Node.Status GoToPainting()
     {
+        if (!painting.activeSelf)
+            return Node.Status.FAILURE;
+
         Node.Status s = GoToLocation(painting.transform.position);
         if (s == Node.Status.SUCCESS)
         {
             painting.transform.parent = this.gameObject.transform;
+            pickup = painting;
         }
         return s;
     }
@@ -93,7 +103,7 @@ public class RobberBehaviour : BTAgent
         if (s == Node.Status.SUCCESS)
         {
             money += 300;
-            diamond.SetActive(false);
+            pickup.SetActive(false);
         }
         return s;
     }
