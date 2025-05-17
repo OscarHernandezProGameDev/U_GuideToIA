@@ -13,26 +13,7 @@ public class BTAgent : MonoBehaviour
 
     WaitForSeconds waitForSeconds;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    protected virtual void Start()
-    {
-        agent = this.GetComponent<NavMeshAgent>();
-
-        tree = new BehaviourTree();
-        waitForSeconds = new WaitForSeconds(Random.Range(0.1f, 1f));
-        StartCoroutine(Behave());
-    }
-
-    IEnumerator Behave()
-    {
-        while (true)
-        {
-            tree.Process();
-            yield return waitForSeconds;
-        }
-    }
-
-    protected Node.Status GoToLocation(Vector3 destination)
+    public Node.Status GoToLocation(Vector3 destination)
     {
         float distanceToTarget = Vector3.Distance(destination, this.transform.position);
         if (state == ActionState.IDLE)
@@ -51,5 +32,48 @@ public class BTAgent : MonoBehaviour
             return Node.Status.SUCCESS;
         }
         return Node.Status.RUNNING;
+    }
+
+    public Node.Status CanSee(Vector3 target, string tag, float distance, float maxAngle)
+    {
+        Vector3 directionToTarget = target - this.transform.position;
+        float angle = Vector3.Angle(directionToTarget, this.transform.forward);
+
+        if (angle <= maxAngle && directionToTarget.magnitude <= distance)
+        {
+            RaycastHit hitInfo;
+
+            if (Physics.Raycast(this.transform.position, directionToTarget, out hitInfo, distance))
+            {
+                if (hitInfo.collider.gameObject.transform.CompareTag(tag))
+                    return Node.Status.SUCCESS;
+            }
+        }
+
+        return Node.Status.FAILURE;
+    }
+
+    public Node.Status Flee(Vector3 location, float distance)
+    {
+        return GoToLocation(transform.position + (transform.position - location).normalized * distance);
+    }
+
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    protected virtual void Start()
+    {
+        agent = this.GetComponent<NavMeshAgent>();
+
+        tree = new BehaviourTree();
+        waitForSeconds = new WaitForSeconds(Random.Range(0.1f, 1f));
+        StartCoroutine(Behave());
+    }
+
+    IEnumerator Behave()
+    {
+        while (true)
+        {
+            tree.Process();
+            yield return waitForSeconds;
+        }
     }
 }

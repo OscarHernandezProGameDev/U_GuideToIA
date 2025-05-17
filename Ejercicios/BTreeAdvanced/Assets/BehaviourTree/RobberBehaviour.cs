@@ -67,6 +67,16 @@ public class RobberBehaviour : BTAgent
 
     }
 
+    public Node.Status CanSeeCop()
+    {
+        return Node.Status.FAILURE;
+    }
+
+    public Node.Status FleeFromCop()
+    {
+        return Node.Status.FAILURE;
+    }
+
     public Node.Status HasMoney()
     {
         if (money < 500)
