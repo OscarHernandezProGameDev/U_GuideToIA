@@ -32,19 +32,21 @@ public class RobberBehaviour : BTAgent
         Leaf goToArt1 = new Leaf("Go To Art 1", GoToArt1);
         Leaf goToArt2 = new Leaf("Go To Art 2", GoToArt2);
         Leaf goToArt3 = new Leaf("Go To Art 3", GoToArt3);
-        //Leaf goToArt4 = new Leaf("Go To Painting", GoToArt4);
-        //Leaf goToArt5 = new Leaf("Go To Painting", GoToArt5);
-        //Leaf goToArt6 = new Leaf("Go To Painting", GoToArt6);
-        //Leaf goToArt7 = new Leaf("Go To Painting", GoToArt7);
-        //Leaf goToArt8 = new Leaf("Go To Painting", GoToArt8);
-        //Leaf goToArt9 = new Leaf("Go To Painting", GoToArt9);
-        //Leaf goToArt10 = new Leaf("Go To Painting", GoToArt10);
+
+        RSelector selectObject = new RSelector("Select Object To Steal");
+
+        for (int i = 0; i < arts.Length; i++)
+        {
+
+            Leaf gta = new($"Go To Art {arts[i].name}", i, GoToArt);
+
+            selectObject.AddChild(gta);
+        }
 
         goToBackDoor = new Leaf("Go To Backdoor", GoToBackDoor, 2);
         goToFrontDoor = new Leaf("Go To Frontdoor", GoToFrontDoor, 1);
         Leaf goToVan = new Leaf("Go To Van", GoToVan);
         PSelector opendoor = new PSelector("Open Door");
-        RSelector selectObject = new RSelector("Select Object To Steal");
 
         Inverter inverterMoney = new Inverter("Has Money");
         inverterMoney.AddChild(hasGotMoney);
@@ -54,10 +56,6 @@ public class RobberBehaviour : BTAgent
 
         steal.AddChild(inverterMoney);
         steal.AddChild(opendoor);
-
-        selectObject.AddChild(goToArt1);
-        selectObject.AddChild(goToArt2);
-        selectObject.AddChild(goToArt3);
 
         steal.AddChild(selectObject);
 
@@ -100,6 +98,20 @@ public class RobberBehaviour : BTAgent
         {
             painting.transform.parent = this.gameObject.transform;
             pickup = painting;
+        }
+        return s;
+    }
+
+    public Node.Status GoToArt(int i)
+    {
+        if (!arts[i].activeSelf)
+            return Node.Status.FAILURE;
+
+        Node.Status s = GoToLocation(arts[i].transform.position);
+        if (s == Node.Status.SUCCESS)
+        {
+            arts[i].transform.parent = this.gameObject.transform;
+            pickup = arts[i];
         }
         return s;
     }
