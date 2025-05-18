@@ -12,6 +12,7 @@ public class BTAgent : MonoBehaviour
     protected Node.Status treeStatus = Node.Status.RUNNING;
 
     WaitForSeconds waitForSeconds;
+    Vector3 rememberedLocation;
 
     public Node.Status GoToLocation(Vector3 destination)
     {
@@ -45,7 +46,7 @@ public class BTAgent : MonoBehaviour
 
             if (Physics.Raycast(this.transform.position, directionToTarget, out hitInfo, distance))
             {
-                if (hitInfo.collider.gameObject.transform.CompareTag(tag))
+                if (hitInfo.collider.gameObject.CompareTag(tag))
                     return Node.Status.SUCCESS;
             }
         }
@@ -55,7 +56,10 @@ public class BTAgent : MonoBehaviour
 
     public Node.Status Flee(Vector3 location, float distance)
     {
-        return GoToLocation(transform.position + (transform.position - location).normalized * distance);
+        if (state == ActionState.IDLE)
+            rememberedLocation = transform.position + (transform.position - location).normalized * distance;
+
+        return GoToLocation(rememberedLocation);
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created

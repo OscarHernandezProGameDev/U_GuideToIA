@@ -10,6 +10,7 @@ public class RobberBehaviour : BTAgent
     public GameObject van;
     public GameObject backdoor;
     public GameObject frontdoor;
+    public GameObject cop;
 
     public GameObject[] arts;
 
@@ -61,7 +62,17 @@ public class RobberBehaviour : BTAgent
 
         //steal.AddChild(goToBackDoor);
         steal.AddChild(goToVan);
-        tree.AddChild(steal);
+
+        Sequence runAway = new Sequence("Run Away");
+        Leaf canSeeCop = new Leaf("Can See Cop?", CanSeeCop);
+        Leaf fleeFromCop = new Leaf("Flee From Cop", FleeFromCop);
+
+        runAway.AddChild(canSeeCop);
+        runAway.AddChild(fleeFromCop);
+
+        //steal.AddChild(runAway);
+
+        tree.AddChild(runAway);
 
         tree.PrintTree();
 
@@ -69,12 +80,12 @@ public class RobberBehaviour : BTAgent
 
     public Node.Status CanSeeCop()
     {
-        return Node.Status.FAILURE;
+        return CanSee(cop.transform.position, "Cop", 50, 90);
     }
 
     public Node.Status FleeFromCop()
     {
-        return Node.Status.FAILURE;
+        return Flee(cop.transform.position, 10);
     }
 
     public Node.Status HasMoney()

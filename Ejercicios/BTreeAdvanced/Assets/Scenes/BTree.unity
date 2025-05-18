@@ -740,7 +740,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6631964419132099031, guid: 35d11d1e1dd397942b5024ee78060e27, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.8664246
+      value: 19.77
       objectReference: {fileID: 0}
     - target: {fileID: 6631964419132099031, guid: 35d11d1e1dd397942b5024ee78060e27, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2439,6 +2439,7 @@ MonoBehaviour:
   van: {fileID: 1086641422}
   backdoor: {fileID: 919599686}
   frontdoor: {fileID: 1791870521}
+  cop: {fileID: 162497025}
   arts:
   - {fileID: 1904932022}
   - {fileID: 1101234485}
