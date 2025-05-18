@@ -33,4 +33,11 @@ public class Node
     {
         children.Add(n);
     }
+
+    public void Reset()
+    {
+        foreach (Node n in children)
+            n.Reset();
+        currentChild = 0;
+    }
 }

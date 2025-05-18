@@ -25,7 +25,6 @@ public class RobberBehaviour : BTAgent
     protected override void Start()
     {
         base.Start();
-        Sequence steal = new Sequence("Steal Something");
         Leaf goToDiamond = new Leaf("Go To Diamond", GoToDiamond, 1);
         Leaf goToPainting = new Leaf("Go To Painting", GoToPainting, 2);
         Leaf hasGotMoney = new Leaf("Has Got Money", HasMoney);
@@ -58,28 +57,41 @@ public class RobberBehaviour : BTAgent
         runAway.AddChild(canSeeCop);
         runAway.AddChild(fleeFromCop);
 
-        Inverter inverterCanSeeCop = new Inverter("Can't See Cop");
-        inverterCanSeeCop.AddChild(canSeeCop);
+        Inverter cantSeeCop = new Inverter("Can't See Cop");
+        cantSeeCop.AddChild(canSeeCop);
 
         Sequence s1 = new Sequence("s1");
         s1.AddChild(inverterMoney);
 
         Sequence s2 = new Sequence("s2");
-        s2.AddChild(inverterCanSeeCop);
+        s2.AddChild(cantSeeCop);
         s2.AddChild(opendoor);
 
         Sequence s3 = new Sequence("s3");
-        s3.AddChild(inverterCanSeeCop);
+        s3.AddChild(cantSeeCop);
         s3.AddChild(selectObject);
 
         Sequence s4 = new Sequence("s4");
         s4.AddChild(inverterMoney);
         s4.AddChild(goToVan);
 
+
+        /*
         steal.AddChild(s1);
         steal.AddChild(s2);
         steal.AddChild(s3);
         steal.AddChild(s4);
+        */
+
+        BehaviourTree seeCop = new BehaviourTree();
+        seeCop.AddChild(cantSeeCop);
+
+        DepSequence steal = new DepSequence("Steal Something", seeCop, agent);
+
+        steal.AddChild(inverterMoney);
+        steal.AddChild(opendoor);
+        steal.AddChild(selectObject);
+        steal.AddChild(goToVan);
 
         Selector beThief = new Selector("Be a Thief");
 
