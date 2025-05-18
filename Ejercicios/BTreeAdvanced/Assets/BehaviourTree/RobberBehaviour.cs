@@ -30,10 +30,6 @@ public class RobberBehaviour : BTAgent
         Leaf goToPainting = new Leaf("Go To Painting", GoToPainting, 2);
         Leaf hasGotMoney = new Leaf("Has Got Money", HasMoney);
 
-        Leaf goToArt1 = new Leaf("Go To Art 1", GoToArt1);
-        Leaf goToArt2 = new Leaf("Go To Art 2", GoToArt2);
-        Leaf goToArt3 = new Leaf("Go To Art 3", GoToArt3);
-
         RSelector selectObject = new RSelector("Select Object To Steal");
 
         for (int i = 0; i < arts.Length; i++)
@@ -56,23 +52,34 @@ public class RobberBehaviour : BTAgent
         Inverter inverterMoney = new Inverter("Has Money");
         inverterMoney.AddChild(hasGotMoney);
 
-        Inverter inverterCanSeeCop = new Inverter("Can't See Cop");
-        inverterCanSeeCop.AddChild(canSeeCop);
-
         opendoor.AddChild(goToFrontDoor);
         opendoor.AddChild(goToBackDoor);
 
-        steal.AddChild(inverterMoney);
-        steal.AddChild(inverterCanSeeCop);
-        steal.AddChild(opendoor);
-
-        steal.AddChild(selectObject);
-
-        //steal.AddChild(goToBackDoor);
-        steal.AddChild(goToVan);
-
         runAway.AddChild(canSeeCop);
         runAway.AddChild(fleeFromCop);
+
+        Inverter inverterCanSeeCop = new Inverter("Can't See Cop");
+        inverterCanSeeCop.AddChild(canSeeCop);
+
+        Sequence s1 = new Sequence("s1");
+        s1.AddChild(inverterMoney);
+
+        Sequence s2 = new Sequence("s2");
+        s2.AddChild(inverterCanSeeCop);
+        s2.AddChild(opendoor);
+
+        Sequence s3 = new Sequence("s3");
+        s3.AddChild(inverterCanSeeCop);
+        s3.AddChild(selectObject);
+
+        Sequence s4 = new Sequence("s4");
+        s4.AddChild(inverterMoney);
+        s4.AddChild(goToVan);
+
+        steal.AddChild(s1);
+        steal.AddChild(s2);
+        steal.AddChild(s3);
+        steal.AddChild(s4);
 
         Selector beThief = new Selector("Be a Thief");
 
@@ -140,48 +147,6 @@ public class RobberBehaviour : BTAgent
         {
             arts[i].transform.parent = this.gameObject.transform;
             pickup = arts[i];
-        }
-        return s;
-    }
-
-    public Node.Status GoToArt1()
-    {
-        if (!arts[0].activeSelf)
-            return Node.Status.FAILURE;
-
-        Node.Status s = GoToLocation(arts[0].transform.position);
-        if (s == Node.Status.SUCCESS)
-        {
-            arts[0].transform.parent = this.gameObject.transform;
-            pickup = arts[0];
-        }
-        return s;
-    }
-
-    public Node.Status GoToArt2()
-    {
-        if (!arts[1].activeSelf)
-            return Node.Status.FAILURE;
-
-        Node.Status s = GoToLocation(arts[1].transform.position);
-        if (s == Node.Status.SUCCESS)
-        {
-            arts[1].transform.parent = this.gameObject.transform;
-            pickup = arts[1];
-        }
-        return s;
-    }
-
-    public Node.Status GoToArt3()
-    {
-        if (!arts[2].activeSelf)
-            return Node.Status.FAILURE;
-
-        Node.Status s = GoToLocation(arts[2].transform.position);
-        if (s == Node.Status.SUCCESS)
-        {
-            arts[2].transform.parent = this.gameObject.transform;
-            pickup = arts[2];
         }
         return s;
     }
