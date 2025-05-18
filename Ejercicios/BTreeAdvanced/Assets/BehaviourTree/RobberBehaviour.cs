@@ -83,12 +83,15 @@ public class RobberBehaviour : BTAgent
         steal.AddChild(s4);
         */
 
-        BehaviourTree seeCop = new BehaviourTree();
-        seeCop.AddChild(cantSeeCop);
+        BehaviourTree stealConditions = new BehaviourTree();
+        Sequence conditions = new Sequence("Steal Conditions");
+        conditions.AddChild(cantSeeCop);
+        conditions.AddChild(inverterMoney);
+        stealConditions.AddChild(conditions);
 
-        DepSequence steal = new DepSequence("Steal Something", seeCop, agent);
+        DepSequence steal = new DepSequence("Steal Something", stealConditions, agent);
 
-        steal.AddChild(inverterMoney);
+        //steal.AddChild(inverterMoney);
         steal.AddChild(opendoor);
         steal.AddChild(selectObject);
         steal.AddChild(goToVan);

@@ -19,7 +19,7 @@ public class Sequence : Node
             foreach (Node n in children)
                 n.Reset();
 
-            return Status.SUCCESS;
+            return Status.FAILURE;
         }
 
         currentChild++;

@@ -44,7 +44,7 @@ public class BTAgent : MonoBehaviour
         {
             RaycastHit hitInfo;
 
-            if (Physics.Raycast(this.transform.position, directionToTarget, out hitInfo, distance))
+            if (Physics.Raycast(this.transform.position, directionToTarget, out hitInfo))
             {
                 if (hitInfo.collider.gameObject.CompareTag(tag))
                     return Node.Status.SUCCESS;
