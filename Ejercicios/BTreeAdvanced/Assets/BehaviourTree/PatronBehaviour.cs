@@ -23,12 +23,25 @@ public class PatronBehaviour : BTAgent
         Leaf goToFrontDoor = new Leaf("Go To Frontdoor", GoToFrontDoor);
         Leaf goToHome = new Leaf("Go To Home", GoToHome);
         Leaf isBored = new Leaf("Is Bored?", IsBored);
+
+        Sequence viewArt = new Sequence("View Art");
+        viewArt.AddChild(isBored);
+        viewArt.AddChild(goToFrontDoor);
+        viewArt.AddChild(selectObject);
+        viewArt.AddChild(goToHome);
+
+        Selector bePatron = new Selector("Be An Art Patron");
+        bePatron.AddChild(viewArt);
+
+        tree.AddChild(bePatron);
     }
 
     public Node.Status GoToArt(int i)
     {
         if (!art[i].activeSelf) return Node.Status.FAILURE;
         Node.Status s = GoToLocation(art[i].transform.position);
+        if (s == Node.Status.SUCCESS)
+            boredom = Mathf.Clamp(boredom - 500, 0, 1000);
         return s;
     }
 
