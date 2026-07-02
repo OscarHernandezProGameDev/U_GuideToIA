@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -34,6 +35,17 @@ public class PatronBehaviour : BTAgent
         bePatron.AddChild(viewArt);
 
         tree.AddChild(bePatron);
+
+        StartCoroutine("IncreaseBoredom");
+    }
+
+    IEnumerator IncreaseBoredom()
+    {
+        while (true)
+        {
+            boredom = Mathf.Clamp(boredom + 20, 0, 1000);
+            yield return new WaitForSeconds(Random.Range(1f, 5f));
+        }
     }
 
     public Node.Status GoToArt(int i)
