@@ -28,7 +28,15 @@ public class PatronBehaviour : BTAgent
         Sequence viewArt = new Sequence("View Art");
         viewArt.AddChild(isBored);
         viewArt.AddChild(goToFrontDoor);
-        viewArt.AddChild(selectObject);
+
+        BehaviourTree whileBored = new BehaviourTree();
+        whileBored.AddChild(isBored);
+
+        Loop lookAtPaints = new Loop("Look", whileBored);
+        lookAtPaints.AddChild(selectObject);
+
+        viewArt.AddChild(lookAtPaints);
+
         viewArt.AddChild(goToHome);
 
         Selector bePatron = new Selector("Be An Art Patron");
@@ -53,7 +61,7 @@ public class PatronBehaviour : BTAgent
         if (!art[i].activeSelf) return Node.Status.FAILURE;
         Node.Status s = GoToLocation(art[i].transform.position);
         if (s == Node.Status.SUCCESS)
-            boredom = Mathf.Clamp(boredom - 500, 0, 1000);
+            boredom = Mathf.Clamp(boredom - 150, 0, 1000);
         return s;
     }
 
