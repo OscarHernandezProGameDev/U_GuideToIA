@@ -24,8 +24,10 @@ public class PatronBehaviour : BTAgent
         Leaf goToFrontDoor = new Leaf("Go To Frontdoor", GoToFrontDoor);
         Leaf goToHome = new Leaf("Go To Home", GoToHome);
         Leaf isBored = new Leaf("Is Bored?", IsBored);
+        Leaf isOpen = new Leaf("Is Open?", IsOpen);
 
         Sequence viewArt = new Sequence("View Art");
+        viewArt.AddChild(isOpen);
         viewArt.AddChild(isBored);
         viewArt.AddChild(goToFrontDoor);
 
@@ -36,13 +38,18 @@ public class PatronBehaviour : BTAgent
         lookAtPaints.AddChild(selectObject);
 
         viewArt.AddChild(lookAtPaints);
-
         viewArt.AddChild(goToHome);
 
-        Selector bePatron = new Selector("Be An Art Patron");
+        BehaviourTree galleryOpenCondition = new BehaviourTree();
+        galleryOpenCondition.AddChild(isOpen);
+        DepSequence bePatron = new DepSequence("Be An Art Patron", galleryOpenCondition, agent);
         bePatron.AddChild(viewArt);
 
-        tree.AddChild(bePatron);
+        Selector viewArtWithFallback = new Selector("View Art with Fallback");
+        viewArtWithFallback.AddChild(bePatron);
+        viewArtWithFallback.AddChild(goToHome);
+
+        tree.AddChild(viewArtWithFallback);
 
         StartCoroutine("IncreaseBoredom");
     }
@@ -87,7 +94,7 @@ public class PatronBehaviour : BTAgent
 
     public Node.Status IsOpen()
     {
-        if (Blackboard.Instance.timeOfDay < 9 || Blackboard.Instance.timeOfDay < 17)
+        if (Blackboard.Instance.timeOfDay < 9 || Blackboard.Instance.timeOfDay > 17)
             return Node.Status.FAILURE;
         else
             return Node.Status.SUCCESS;
