@@ -8,7 +8,12 @@ public class BTAgent : MonoBehaviour
     public BehaviourTree tree;
     public NavMeshAgent agent;
 
-    public enum ActionState { IDLE, WORKING };
+    public enum ActionState
+    {
+        IDLE,
+        WORKING
+    };
+
     public ActionState state = ActionState.IDLE;
 
     public Node.Status treeStatus = Node.Status.RUNNING;
@@ -41,7 +46,16 @@ public class BTAgent : MonoBehaviour
                 }
             }
         }
+
         return Node.Status.FAILURE;
+    }
+
+    public Node.Status IsOpen()
+    {
+        if (Blackboard.Instance.timeOfDay < 9 || Blackboard.Instance.timeOfDay > 17)
+            return Node.Status.FAILURE;
+        else
+            return Node.Status.SUCCESS;
     }
 
     public Node.Status Flee(Vector3 location, float distance)
@@ -50,6 +64,7 @@ public class BTAgent : MonoBehaviour
         {
             rememberedLocation = this.transform.position + (transform.position - location).normalized * distance;
         }
+
         return GoToLocation(rememberedLocation);
     }
 
@@ -71,6 +86,7 @@ public class BTAgent : MonoBehaviour
             state = ActionState.IDLE;
             return Node.Status.SUCCESS;
         }
+
         return Node.Status.RUNNING;
     }
 
@@ -84,6 +100,7 @@ public class BTAgent : MonoBehaviour
                 door.GetComponent<NavMeshObstacle>().enabled = false;
                 return Node.Status.SUCCESS;
             }
+
             return Node.Status.FAILURE;
         }
         else

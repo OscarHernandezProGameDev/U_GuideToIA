@@ -91,12 +91,4 @@ public class PatronBehaviour : BTAgent
         else
             return Node.Status.SUCCESS;
     }
-
-    public Node.Status IsOpen()
-    {
-        if (Blackboard.Instance.timeOfDay < 9 || Blackboard.Instance.timeOfDay > 17)
-            return Node.Status.FAILURE;
-        else
-            return Node.Status.SUCCESS;
-    }
 }
