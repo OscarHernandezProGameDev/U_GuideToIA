@@ -596,7 +596,7 @@ MonoBehaviour:
   - {fileID: 915494408}
   frontdoor: {fileID: 1791870521}
   home: {fileID: 1047300029}
-  boredom: 0
+  boredom: 970
   ticket: 0
 --- !u!195 &74704514
 NavMeshAgent:
@@ -3039,7 +3039,7 @@ MonoBehaviour:
   - {fileID: 915494408}
   frontdoor: {fileID: 1791870521}
   home: {fileID: 1047300029}
-  boredom: 0
+  boredom: 970
   ticket: 0
 --- !u!195 &425940864
 NavMeshAgent:
@@ -3114,7 +3114,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Blackboard
   timeOfDay: 0
   clock: {fileID: 1459739123}
-  patron: {fileID: 0}
+  openTime: 6
+  closeTime: 20
 --- !u!1 &524558653
 GameObject:
   m_ObjectHideFlags: 0
@@ -3753,7 +3754,7 @@ MonoBehaviour:
   - {fileID: 915494408}
   frontdoor: {fileID: 1791870521}
   home: {fileID: 1047300029}
-  boredom: 0
+  boredom: 970
   ticket: 0
 --- !u!195 &657414872
 NavMeshAgent:
@@ -4964,7 +4965,7 @@ MonoBehaviour:
   - {fileID: 915494408}
   frontdoor: {fileID: 1791870521}
   home: {fileID: 1047300029}
-  boredom: 0
+  boredom: 970
   ticket: 0
 --- !u!195 &884287236
 NavMeshAgent:
@@ -5975,7 +5976,7 @@ MonoBehaviour:
   - {fileID: 915494408}
   frontdoor: {fileID: 1791870521}
   home: {fileID: 1047300029}
-  boredom: 0
+  boredom: 970
   ticket: 0
 --- !u!195 &953984947
 NavMeshAgent:

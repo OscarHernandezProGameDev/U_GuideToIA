@@ -4,6 +4,8 @@ public class Worker : BTAgent
 {
     public GameObject office;
 
+    private GameObject patron;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public override void Start()
     {
@@ -20,14 +22,14 @@ public class Worker : BTAgent
 
     public Node.Status GoToPatron()
     {
-        if (Blackboard.Instance.patron == null)
+        if (Blackboard.Instance.patrons.Count == 0)
             return Node.Status.FAILURE;
-
-        Node.Status s = GoToLocation(Blackboard.Instance.patron.transform.position);
+        patron = Blackboard.Instance.patrons.Pop();
+        Node.Status s = GoToLocation(patron.transform.position);
         if (s == Node.Status.SUCCESS)
         {
-            Blackboard.Instance.patron.GetComponent<PatronBehaviour>().ticket = true;
-            Blackboard.Instance.DeregisterPatron();
+            patron.GetComponent<PatronBehaviour>().ticket = true;
+            patron = null;
         }
 
         return s;

@@ -115,7 +115,7 @@ public class PatronBehaviour : BTAgent
 
     public Node.Status IsWaiting()
     {
-        if (Blackboard.Instance.RegisterPatron(this.gameObject) == this.gameObject)
+        if (Blackboard.Instance.RegisterPatron(this.gameObject) )
             return Node.Status.SUCCESS;
         else
             return Node.Status.FAILURE;

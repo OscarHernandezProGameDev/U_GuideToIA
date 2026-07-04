@@ -1,12 +1,15 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Blackboard : MonoBehaviour
 {
-    public float timeOfDay;
+    public int timeOfDay;
     public Text clock;
-    public GameObject patron;
+    public Stack<GameObject> patrons = new Stack<GameObject>();
+    public int openTime = 6;
+    public int closeTime = 20;
 
     static Blackboard instance;
 
@@ -52,20 +55,21 @@ public class Blackboard : MonoBehaviour
             if (timeOfDay > 23)
                 timeOfDay = 0;
             clock.text = $"{timeOfDay}:00";
+            if (timeOfDay == closeTime)
+                patrons.Clear();
             yield return new WaitForSeconds(1f);
         }
     }
 
-    public GameObject RegisterPatron(GameObject p)
+    public bool RegisterPatron(GameObject p)
     {
-        if (patron == null)
-            patron = p;
+        patrons.Push(p);
 
-        return patron;
+        return true;
     }
 
     public void DeregisterPatron()
     {
-        patron = null;
+        //patron = null;
     }
 }
