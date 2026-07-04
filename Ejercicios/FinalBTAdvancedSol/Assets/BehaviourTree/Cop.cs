@@ -1,19 +1,19 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class Cop : BTAgent
-{
+public class Cop : BTAgent {
+
     public GameObject[] patrolPoints;
     public GameObject robber;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    public override void Start()
-    {
+    public override void Start() {
         base.Start();
 
         Sequence selectPatrolPoint = new Sequence("Select Patrol Point");
-        for (int i = 0; i < patrolPoints.Length; i++)
-        {
-            Leaf pp = new Leaf("Go to " + patrolPoints[i].name, i, GoToPatrolPoint);
+        for (int i = 0; i < patrolPoints.Length; ++i) {
+
+            Leaf pp = new Leaf("Go to " + patrolPoints[i].name, i, GoToPoint);
             selectPatrolPoint.AddChild(pp);
         }
 
@@ -24,7 +24,7 @@ public class Cop : BTAgent
         chaseRobber.AddChild(canSee);
         chaseRobber.AddChild(chase);
 
-        Inverter cantSeeRobber = new Inverter("Cant See Robber");
+        Inverter cantSeeRobber = new Inverter("Can't See Robber");
         cantSeeRobber.AddChild(canSee);
 
         BehaviourTree patrolConditions = new BehaviourTree();
@@ -34,31 +34,35 @@ public class Cop : BTAgent
         DepSequence patrol = new DepSequence("Patrol Until", patrolConditions, agent);
         patrol.AddChild(selectPatrolPoint);
 
-        Selector beCop = new Selector("Be a Cop");
+        Selector beCop = new Selector("Be a cop");
         beCop.AddChild(patrol);
         beCop.AddChild(chaseRobber);
 
         tree.AddChild(beCop);
     }
 
-    public Node.Status GoToPatrolPoint(int i)
-    {
+    public Node.Status GoToPoint(int i) {
+
         Node.Status s = GoToLocation(patrolPoints[i].transform.position);
         return s;
     }
 
-    public Node.Status CanSeeRobber()
-    {
-        return CanSee(robber.transform.position, "Robber", 5, 60);
+    public Node.Status CanSeeRobber() {
+
+        return CanSee(robber.transform.position, "Robber", 5.0f, 60.0f);
     }
 
-    private Vector3 rl;
+    Vector3 rl;
 
-    public Node.Status ChaseRobber()
-    {
-        float chaseDistance = 10;
-        if (state == ActionState.IDLE)
+    public Node.Status ChaseRobber() {
+
+        float chaseDistance = 10.0f;
+
+        if (state == ActionState.IDLE) {
+
             rl = this.transform.position - (transform.position - robber.transform.position).normalized * chaseDistance;
+        }
+
         return GoToLocation(rl);
     }
 }
