@@ -1,27 +1,28 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Worker : BTAgent
 {
     public GameObject office;
+    public GameObject patron;
 
-    private GameObject patron;
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    // Start is called before the first frame update
     public override void Start()
     {
         base.Start();
-        Leaf patronStillWaiting = new Leaf("Is Patron Waiting", PatronWaiting);
+        Leaf patronStillWaiting = new Leaf("Is Patron Waiting?", PatronWaiting);
         Leaf allocatePatron = new Leaf("Allocate Patron", AllocatePatron);
         Leaf goToPatron = new Leaf("Go To Patron", GoToPatron);
         Leaf goToOffice = new Leaf("Go To Office", GoToOffice);
 
-        Sequence getPatron = new Sequence("Find a patron");
+        Sequence getPatron = new Sequence("Find a Patron");
         getPatron.AddChild(allocatePatron);
 
-        BehaviourTree waitingTree = new BehaviourTree();
-        waitingTree.AddChild(patronStillWaiting);
+        BehaviourTree waiting = new BehaviourTree();
+        waiting.AddChild(patronStillWaiting);
 
-        DepSequence moveToPatron = new DepSequence("Moving to Patron", waitingTree, agent);
+        DepSequence moveToPatron = new DepSequence("Moving To Patron", waiting, agent);
         moveToPatron.AddChild(goToPatron);
 
         getPatron.AddChild(moveToPatron);
@@ -35,11 +36,9 @@ public class Worker : BTAgent
 
     public Node.Status PatronWaiting()
     {
-        if (patron == null)
-            return Node.Status.FAILURE;
+        if (patron == null) return Node.Status.FAILURE;
         if (patron.GetComponent<PatronBehaviour>().isWaiting)
             return Node.Status.SUCCESS;
-
         return Node.Status.FAILURE;
     }
 
@@ -47,25 +46,21 @@ public class Worker : BTAgent
     {
         if (Blackboard.Instance.patrons.Count == 0)
             return Node.Status.FAILURE;
-
         patron = Blackboard.Instance.patrons.Pop();
         if (patron == null)
             return Node.Status.FAILURE;
-
         return Node.Status.SUCCESS;
     }
 
     public Node.Status GoToPatron()
     {
-        if (patron == null)
-            return Node.Status.FAILURE;
+        if (patron == null) return Node.Status.FAILURE;
         Node.Status s = GoToLocation(patron.transform.position);
         if (s == Node.Status.SUCCESS)
         {
             patron.GetComponent<PatronBehaviour>().ticket = true;
             patron = null;
         }
-
         return s;
     }
 
@@ -75,4 +70,5 @@ public class Worker : BTAgent
         patron = null;
         return s;
     }
+
 }

@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -8,16 +9,18 @@ public class PatronBehaviour : BTAgent
     public GameObject frontdoor;
     public GameObject home;
 
-    [Range(0, 1000)] public int boredom = 0;
+    [Range(0, 1000)]
+    public int boredom = 0;
 
     public bool ticket = false;
     public bool isWaiting = false;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+    // Start is called before the first frame update
     public override void Start()
     {
         base.Start();
-        RSelector selectObject = new RSelector("Select Art to View");
+        RSelector selectObject = new RSelector("Select Art To View");
         for (int i = 0; i < art.Length; i++)
         {
             Leaf gta = new Leaf("Go to " + art[i].name, i, GoToArt);
@@ -25,7 +28,7 @@ public class PatronBehaviour : BTAgent
         }
 
         Leaf goToFrontDoor = new Leaf("Go To Frontdoor", GoToFrontDoor);
-        Leaf goToHome = new Leaf("Go To Home", GoToHome);
+        Leaf goToHome = new Leaf("Go Home", GoToHome);
         Leaf isBored = new Leaf("Is Bored?", IsBored);
         Leaf isOpen = new Leaf("Is Open?", IsOpen);
 
@@ -34,8 +37,8 @@ public class PatronBehaviour : BTAgent
         viewArt.AddChild(isBored);
         viewArt.AddChild(goToFrontDoor);
 
-        Leaf noTicket = new Leaf("Wait for ticket", NoTicket);
-        Leaf isWaiting = new Leaf("Waiting for worker", IsWaiting);
+        Leaf noTicket = new Leaf("Wait for Ticket", NoTicket);
+        Leaf isWaiting = new Leaf("Waiting for Worker", IsWaiting);
 
         BehaviourTree waitForTicket = new BehaviourTree();
         waitForTicket.AddChild(noTicket);
@@ -48,10 +51,10 @@ public class PatronBehaviour : BTAgent
         BehaviourTree whileBored = new BehaviourTree();
         whileBored.AddChild(isBored);
 
-        Loop lookAtPaints = new Loop("Look", whileBored);
-        lookAtPaints.AddChild(selectObject);
+        Loop lookAtPaintings = new Loop("Look", whileBored);
+        lookAtPaintings.AddChild(selectObject);
 
-        viewArt.AddChild(lookAtPaints);
+        viewArt.AddChild(lookAtPaintings);
         viewArt.AddChild(goToHome);
 
         BehaviourTree galleryOpenCondition = new BehaviourTree();
@@ -73,7 +76,7 @@ public class PatronBehaviour : BTAgent
         while (true)
         {
             boredom = Mathf.Clamp(boredom + 20, 0, 1000);
-            yield return new WaitForSeconds(Random.Range(1f, 5f));
+            yield return new WaitForSeconds(Random.Range(1, 5));
         }
     }
 
@@ -82,7 +85,9 @@ public class PatronBehaviour : BTAgent
         if (!art[i].activeSelf) return Node.Status.FAILURE;
         Node.Status s = GoToLocation(art[i].transform.position);
         if (s == Node.Status.SUCCESS)
+        {
             boredom = Mathf.Clamp(boredom - 150, 0, 1000);
+        }
         return s;
     }
 
@@ -110,7 +115,9 @@ public class PatronBehaviour : BTAgent
     public Node.Status NoTicket()
     {
         if (ticket || IsOpen() == Node.Status.FAILURE)
+        {
             return Node.Status.FAILURE;
+        }
         else
             return Node.Status.SUCCESS;
     }
