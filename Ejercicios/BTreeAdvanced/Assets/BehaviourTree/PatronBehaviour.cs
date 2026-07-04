@@ -10,6 +10,8 @@ public class PatronBehaviour : BTAgent
 
     [Range(0, 1000)] public int boredom = 0;
 
+    public bool ticket = false;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public override void Start()
     {
@@ -30,6 +32,17 @@ public class PatronBehaviour : BTAgent
         viewArt.AddChild(isOpen);
         viewArt.AddChild(isBored);
         viewArt.AddChild(goToFrontDoor);
+
+        Leaf noTicket = new Leaf("Wait for ticket", NoTicket);
+        Leaf isWaiting = new Leaf("Waiting for worker", IsWaiting);
+
+        BehaviourTree waitForTicket = new BehaviourTree();
+        waitForTicket.AddChild(noTicket);
+
+        Loop getTicket = new Loop("Ticket", waitForTicket);
+        getTicket.AddChild(isWaiting);
+
+        viewArt.AddChild(getTicket);
 
         BehaviourTree whileBored = new BehaviourTree();
         whileBored.AddChild(isBored);
@@ -90,5 +103,21 @@ public class PatronBehaviour : BTAgent
             return Node.Status.FAILURE;
         else
             return Node.Status.SUCCESS;
+    }
+
+    public Node.Status NoTicket()
+    {
+        if (ticket || IsOpen() == Node.Status.FAILURE)
+            return Node.Status.FAILURE;
+        else
+            return Node.Status.SUCCESS;
+    }
+
+    public Node.Status IsWaiting()
+    {
+        if (Blackboard.Instance.RegisterPatron(this.gameObject) == this.gameObject)
+            return Node.Status.SUCCESS;
+        else
+            return Node.Status.FAILURE;
     }
 }

@@ -6,6 +6,7 @@ public class Blackboard : MonoBehaviour
 {
     public float timeOfDay;
     public Text clock;
+    public GameObject patron;
 
     static Blackboard instance;
 
@@ -53,5 +54,18 @@ public class Blackboard : MonoBehaviour
             clock.text = $"{timeOfDay}:00";
             yield return new WaitForSeconds(1f);
         }
+    }
+
+    public GameObject RegisterPatron(GameObject p)
+    {
+        if (patron == null)
+            patron = p;
+
+        return patron;
+    }
+
+    public void DeregisterPatron()
+    {
+        patron = null;
     }
 }
